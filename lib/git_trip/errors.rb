@@ -6,6 +6,7 @@ module GitTrip
       DirNotFound
       InvalidFormat
       InvalidGitRepo
+      InvalidURI
       RTFM
     }.each do |problem|
       eval("class #{problem} < Exception; end")
