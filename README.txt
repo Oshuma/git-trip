@@ -1,6 +1,6 @@
 = git-trip
 
-http://github.com/Oshuma/git-trip/tree/master
+http://github.com/Oshuma/git-trip/
 
 == DESCRIPTION:
 
