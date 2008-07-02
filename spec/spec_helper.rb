@@ -1,5 +1,7 @@
-require File.expand_path(File.dirname(__FILE__) + '/../lib/git_trip')
 require 'spec'
+
+require File.expand_path(File.dirname(__FILE__) + '/../lib/git_trip')
+include GitTrip
 
 Spec::Runner.configure do |config|
   # == Mock Framework

@@ -4,7 +4,7 @@ http://github.com/Oshuma/git-trip/
 
 == DESCRIPTION:
 
-Visualize git commit SHA1s.  It's nerd acid!
+Visualize git commit SHAs.  It's nerd acid!
 
 == FEATURES/PROBLEMS:
 
