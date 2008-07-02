@@ -6,7 +6,7 @@ describe GitTrip do
   end
 
   it "should include Exceptions" do
-    GitTrip::Exceptions.should be_a_kind_of(Module)
+    GitTrip::Errors.should be_a_kind_of(Module)
   end
 
   it "should include Gitter" do

@@ -15,27 +15,29 @@ module GitTrip
     def initialize(options = {})
       @options = options # store a copy of the passed options
 
-      # required
-      raise Exceptions::RTFM unless options[:dir] || options[:url]
+      # dir OR url, NOT both
+      raise Errors::RTFM unless options[:dir] || options[:url]
       @dir = options[:dir] || nil
       @url = options[:url] || nil
-      raise Exceptions::RTFM if @dir && @url
+      raise Errors::RTFM if @dir && @url
 
       # optional/defaults
-      handle_dir_repo if @dir
-      handle_url_repo if @url
+      setup_dir_repo if @dir
+      setup_url_repo if @url
     end
 
     private
 
     # Setup a new Gitter pointing to a directory repository.
-    def handle_dir_repo
+    def setup_dir_repo
+      raise Errors::DirNotFound unless File.exists?(@dir)
+      raise Errors::InvalidGitRepo unless File.exists?("#{@dir}/.git")
     end
 
     # Setup a new Gitter pointing to an URL repository.
-    def handle_url_repo
-      raise Exceptions::InvalidFormat unless FORMATS.include?(@options[:format])
+    def setup_url_repo
       @format = @options[:format] || 'json'
+      raise Errors::InvalidFormat unless FORMATS.include?(@format)
     end
   end # of Gitter
 
