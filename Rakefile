@@ -19,3 +19,8 @@ remove_task 'multi'
 remove_task 'post_blog'
 remove_task 'test'
 remove_task 'test_deps'
+
+desc 'Start an irb session with Ridge loaded'
+task :console do
+  sh "irb -d -I ./lib -r 'git_trip'"
+end

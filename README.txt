@@ -16,6 +16,7 @@ Code sample will be added soon...maybe.
 
 == REQUIREMENTS:
 
+* JSON
 * RMagick (and it's requirements)
 
 == INSTALL:
