@@ -1,5 +1,6 @@
 module GitTrip
 
+  require 'git_trip/gitter/base'
   require 'git_trip/gitter/dir'
   require 'git_trip/gitter/uri'
 

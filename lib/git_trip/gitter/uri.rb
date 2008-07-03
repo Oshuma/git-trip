@@ -1,6 +1,6 @@
 module GitTrip
-
   module Gitter
+
     # Handles fetching git repository information from a remote URI.
     # <b>Required:</b>
     # * <tt>uri</tt>: URI which returns information about a git repository (see +format+).
@@ -8,7 +8,7 @@ module GitTrip
     # <tt>options</tt> can be a hash containing:
     # <b>Optional:</b>
     # * <tt>format</tt>: Defaults to 'json'; see FORMATS.
-    class URI
+    class URI < Gitter::Base
       FORMATS   = %w{ json xml yaml }
       PROTOCOLS = %w{ http https }
 
@@ -50,6 +50,6 @@ module GitTrip
         return uri
       end
     end # of URI
-  end # of Gitter
 
+  end # of Gitter
 end
