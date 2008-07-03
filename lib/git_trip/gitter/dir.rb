@@ -7,7 +7,7 @@ module GitTrip
     class Dir
       def initialize(dir, options = {})
         raise Errors::DirNotFound unless File.exists?(dir)
-        raise Errors::InvalidGitRepo unless File.exists?("#{dir}/.git")
+        raise Errors::InvalidGitRepo unless File.exists?("#{dir}/.git/")
         @dir = dir
       end
     end # of Dir

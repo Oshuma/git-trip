@@ -14,7 +14,6 @@ require 'git_trip/gitter'
 require 'git_trip/painter'
 
 module GitTrip
-  include GitTrip::Errors
-  include Magick
   VERSION = '0.0.1'
+  include GitTrip::Errors
 end

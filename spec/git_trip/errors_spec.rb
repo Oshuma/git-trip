@@ -1,10 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Errors do
-  it "should define CanvasTooSmall" do
-    Errors::CanvasTooSmall.should be_a_kind_of(Class)
-  end
-
   it "should define DirNotFound" do
     Errors::DirNotFound.should be_a_kind_of(Class)
   end
