@@ -22,17 +22,31 @@ describe Painter do
     lambda { Painter.new(5) }.should raise_error(Errors::RTFM)
   end
 
-  it "should return an array of 5 RGB color codes" do
-    @painter.colors.size.should eql(5)
+  it "should return an array of 6 RGB color codes" do
+    @painter.colors.size.should eql(6)
   end
 
-  it "should have 8 characters per color" do
+  it "should have 6 characters per color" do
     @painter.colors.each do |color|
-      color.size.should eql(8)
+      color.size.should eql(6)
     end
   end
 
-  it "should have proper colors for it's SHA" do
-    @painter.colors.join.should eql(@commit)
+  it "should have proper colors for it's SHA and remaining 4 characters" do
+    sha = @painter.colors.to_s + @commit[-4, 4]
+    sha.should eql(@commit)
+  end
+
+  it "should accept a custom image format" do
+    Painter.new(@commit, :format => 'gif').should be_instance_of(Painter)
+  end
+
+  it "should create an image with the given RGB color code" do
+    color = @commit.slice(0, 6)
+    @painter.paint(color).should be_instance_of(Magick::Image)
+  end
+
+  it "should return an array of Magick::Image objects" do
+    @painter.images.each { |image| image.should be_instance_of(Magick::Image) }
   end
 end
