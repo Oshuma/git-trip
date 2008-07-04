@@ -28,6 +28,10 @@ describe Painter do
     @painter.should be_instance_of(Painter)
   end
 
+  it "should build a canvas" do
+    @painter.canvas.should be_instance_of(Magick::ImageList)
+  end
+
   it "should set default width" do
     options = @painter.instance_variable_get(:@options)
     options[:width].should eql(50)
@@ -86,8 +90,20 @@ describe Painter do
     Painter.new(@commit, :size => [25, 25]).should be_instance_of(Painter)
   end
 
-  it "should paint an image with it's colors" do
+  it "should paint a montage image (list)" do
     @painter.paint!.should_not be_false
-    @painter.canvas.should be_instance_of(Magick::ImageList)
+    @painter.picture.should be_instance_of(Magick::ImageList)
+  end
+
+  it "should paint a horizontal image" do
+    @painter = Painter.new(@commit, :style => 'horizontal')
+    @painter.paint!.should_not be_false
+    @painter.picture.should be_instance_of(Magick::Image)
+  end
+
+  it "should paint a vertical image" do
+    @painter = Painter.new(@commit, :style => 'vertical')
+    @painter.paint!.should_not be_false
+    @painter.picture.should be_instance_of(Magick::Image)
   end
 end
