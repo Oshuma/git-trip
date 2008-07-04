@@ -1,11 +1,14 @@
 $LOAD_PATH.unshift File.dirname(__FILE__)
 
-# Third-party libraries.
+# Third-party libraries...
 require 'rubygems'
 require 'digest/sha1'
 require 'json'
 require 'open-uri'
 require 'rmagick'
+
+# ...in ./vendor/
+require 'vendor/grit/lib/grit'
 
 # GitTrip libraries.
 require 'core_ext/hash'

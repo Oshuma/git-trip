@@ -13,6 +13,10 @@ describe Errors do
     Errors::InvalidGitRepo.should be_a_kind_of(Class)
   end
 
+  it "should define InvalidSHA" do
+    Errors::InvalidSHA.should be_a_kind_of(Class)
+  end
+
   it "should define NoCommits" do
     Errors::NoCommits.should be_a_kind_of(Class)
   end

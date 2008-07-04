@@ -1,19 +1,30 @@
 module GitTrip
 
-  # This does the work of creating a commit specific image.
-  # <tt>commits</tt>: An array of SHAs.
-  # <tt>size</tt>: Canvas size; eg. number of generated images; defaults to +commits.size+.
+  # This does the work of creating a commit specific image(s).
+  # Takes either a single SHA string <b>OR</b> an array of commit SHAs.
   class Painter
-    attr_reader :size
-
-    def initialize(commits)
-      raise Errors::NoCommits unless commits.is_a? Array
-      @commits, @size = commits, commits.size
+    def initialize(data)
+      raise Errors::RTFM unless (data.is_a?(Array) || data.is_a?(String))
+      raise Errors::InvalidSHA if invalid_sha?(data)
+      @data = data
     end
 
-    # Iterator for the +commits+.
-    def each_commit(&block)
-      @commits.each { |commit| yield commit }
+    private
+
+    # Returns true if there is an invalid SHA in <tt>data</tt>.
+    def invalid_sha?(data)
+      if data.is_a? Array
+        data.each { |sha| return validate_sha(sha) }
+      else
+        return validate_sha(data)
+      end
+    end
+
+    # Validates a given +sha+ string.
+    # TODO: Probably a more 'proper' way of validating a SHA string.
+    def validate_sha(sha)
+      valid_status = sha.size != 40
+      return valid_status
     end
   end # of Painter
 

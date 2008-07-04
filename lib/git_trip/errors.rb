@@ -6,6 +6,7 @@ module GitTrip
       DirNotFound
       InvalidFormat
       InvalidGitRepo
+      InvalidSHA
       InvalidURI
       NoCommits
       RTFM

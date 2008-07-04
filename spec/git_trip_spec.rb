@@ -5,6 +5,14 @@ describe GitTrip do
     GitTrip::VERSION.should be_a_kind_of(String)
   end
 
+  it "should include Grit" do
+    Grit.should be_a_kind_of(Module)
+  end
+
+  it "should include Magick" do
+    Magick.should be_a_kind_of(Module)
+  end
+
   it "should include Errors" do
     GitTrip::Errors.should be_a_kind_of(Module)
   end

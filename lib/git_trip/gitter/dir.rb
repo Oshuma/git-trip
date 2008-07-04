@@ -7,8 +7,16 @@ module GitTrip
     class Dir < Gitter::Base
       def initialize(dir, options = {})
         raise Errors::DirNotFound unless File.exists?(dir)
-        raise Errors::InvalidGitRepo unless File.exists?("#{dir}/.git/")
-        @dir = dir
+        @repo = Grit::Repo.new(dir)
+        @data = {}
+        load_repo_data
+      end
+
+      private
+
+      # Returns a hash of repository information.
+      def load_repo_data
+        @data[:commits] = @repo.commits.map { |c| c.to_s  }
       end
     end # of Dir
 
