@@ -17,6 +17,6 @@ require 'git_trip/gitter'
 require 'git_trip/painter'
 
 module GitTrip
-  VERSION = '0.0.1'
+  VERSION = '0.0.2'
   include GitTrip::Errors
 end
