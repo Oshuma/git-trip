@@ -40,4 +40,8 @@ describe Painter, 'with a single commit' do
   it "should raise Errors::InvalidSHA" do
     lambda { Painter.new('not a valid sha') }.should raise_error(Errors::InvalidSHA)
   end
+
+  it "should return an array of 5 RGB color codes" do
+    @painter.colors(@commit).size.should eql(5)
+  end
 end

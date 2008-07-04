@@ -9,10 +9,15 @@ module GitTrip
         raise Errors::DirNotFound unless File.exists?(dir)
         @repo = Grit::Repo.new(dir)
         @data = {}
-        load_repo_data
+        setup_data_hash
       end
 
       private
+
+      # # Loads the <tt>@data</tt> hash with repo information.
+      def setup_data_hash
+        load_repo_data
+      end
 
       # Returns a hash of repository information.
       def load_repo_data
