@@ -7,6 +7,7 @@ module GitTrip
       InvalidFormat
       InvalidGitRepo
       InvalidSHA
+      InvalidStyle
       InvalidURI
       NoCommits
       RTFM

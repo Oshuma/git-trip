@@ -37,7 +37,7 @@ def gen_test_images(dir)
     repo.commits.each do |commit|
       painter = GitTrip::Painter.new(commit)
       painter.paint!
-      painter.canvas.write("#{dir}/#{format}/#{commit}.#{format}")
+      painter.picture.write("#{dir}/#{format}/#{commit}.#{format}")
     end
   end
 end
