@@ -2,11 +2,6 @@ module GitTrip
   module Gitter
 
     # Handles fetching git repository information from a remote URI.
-    # <b>Required:</b>
-    # * <tt>uri</tt>: URI which returns information about a git repository (see +format+).
-    #
-    # <tt>options</tt> can be a hash containing:
-    # * <tt>format</tt>: Defaults to 'json'; see FORMATS.
     class URI < Gitter::Base
       FORMATS   = %w{ json xml yaml }
       PROTOCOLS = %w{ http https }
@@ -15,6 +10,12 @@ module GitTrip
         :format => 'json'
       }
 
+      # Takes a +uri+ that returns information about a repository;
+      # expects JSON data by default (see FORMATS).
+      # The second argument is an optional hash of +options+ (see DEFAULTS).
+      #
+      # <tt>options</tt> can contain:
+      # * <tt>format</tt>: Defaults to 'json'; see FORMATS.
       def initialize(uri, options = {})
         raise Errors::InvalidURI if invalid_uri?(uri)
         @uri = uri

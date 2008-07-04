@@ -2,9 +2,8 @@ module GitTrip
   module Gitter
 
     # Handles fetching git repository information from a directory.
-    # <b>Required:</b>
-    # * <tt>dir</tt>: Directory path to a git repository (containing a .git/ subdirectory).
     class Dir < Gitter::Base
+      # <tt>dir</tt> should be a path to a git repository (containing a .git/ subdirectory).
       def initialize(dir, options = {})
         raise Errors::DirNotFound unless File.exists?(dir)
         @repo = Grit::Repo.new(dir)
@@ -14,12 +13,13 @@ module GitTrip
 
       private
 
-      # # Loads the <tt>@data</tt> hash with repository information.
+      # Loads the <tt>@data</tt> hash with repository information.
       def setup_data_hash
         load_repo_commits
       end
 
       # Loads a hash of commits into <tt>@data[:commits]</tt>.
+      # TODO: Implement loading commits from any git branch/object.
       def load_repo_commits
         commits = []
         @repo.commits(@repo.head.name, @repo.commit_count).map do |c|

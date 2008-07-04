@@ -1,14 +1,6 @@
 module GitTrip
 
   # This does the work of creating a commit specific image.
-  # Takes a single 40 character +sha+ string and an (optional)
-  # hash of +options+ (see DEFAULTS).
-  #
-  # +options+ can contain:
-  # * <tt>format</tt>: Image format; anything Magick::Image.new supports (ex. 'png', 'gif', etc).
-  # * <tt>style</tt>: Generated image style; see STYLES.
-  # * <tt>width</tt>: Generated commit image width.
-  # * <tt>height</tt>: Generated commit image height.
   class Painter
     include Magick
 
@@ -26,6 +18,14 @@ module GitTrip
 
     attr_reader :canvas, :colors, :picture
 
+    # Takes a single 40 character +sha+ string and an (optional)
+    # hash of +options+ (see DEFAULTS).
+    #
+    # +options+ can contain:
+    # * <tt>format</tt>: Image format; anything Magick::Image.new supports (ex. 'png', 'gif', etc).
+    # * <tt>style</tt>: Generated image style; see STYLES.
+    # * <tt>width</tt>: Generated commit image width.
+    # * <tt>height</tt>: Generated commit image height.
     def initialize(sha, options = {})
       raise Errors::RTFM unless sha.is_a?(String)
       raise Errors::InvalidSHA if invalid_sha?(sha)

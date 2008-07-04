@@ -8,7 +8,7 @@ module GitTrip
         @data[:commits]
       end
 
-      # Iterator for the +@commits+.
+      # Iterator for the commits.
       def each_commit(&block)
         @data[:commits].each { |commit| yield commit }
       end

@@ -10,7 +10,12 @@ Hoe.new('git-trip', GitTrip::VERSION) do |p|
   p.developer('Dale Campbell', 'dale@save-state.net')
 end
 
-FileList['tasks/**/*.rake'].sort.each { |task| load task }
+# Load any rakefiles in tasks/
+custom_tasks = FileList['tasks/**/*.rake'].sort
+# Load util.rake before any others...
+load custom_tasks.delete('tasks/util.rake')
+# ...now load the rest.
+custom_tasks.each { |task| load task }
 
 # Remove un-needed tasks.
 remove_task 'audit'
