@@ -42,8 +42,7 @@ def confirm(message, options = {})
 end
 
 # Displays +message+ inside a formatted header.
-def header(message = nil)
-  raise ArgumentError, 'No message passed to header.' unless message
+def header(message)
   puts "\n"
   puts '+---'
   puts "| #{message}"
