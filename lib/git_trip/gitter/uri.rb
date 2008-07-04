@@ -12,42 +12,27 @@ module GitTrip
       FORMATS   = %w{ json xml yaml }
       PROTOCOLS = %w{ http https }
 
+      DEFAULTS = {
+        :format => 'json'
+      }
+
       def initialize(uri, options = {})
-        @uri      = validate_uri(uri)
-        @format   = validate_format(options[:format])
-      end
-
-      # Returns an array of commits
-      def commits
-        @data[:commits]
-      end
-
-      # Fetches the repository information from +uri+ in the given +format+.
-      def load_data!
-        stream = open(@uri)
-        case @format
-        when 'json':
-          @data = JSON.parse(open(@uri).read)
-        end
+        raise Errors::InvalidURI if invalid_uri?(uri)
+        @uri = uri
+        @options = DEFAULTS.merge(options)
+        raise Errors::InvalidFormat if invalid_format?(@options[:format])
       end
 
       private
 
-      # Ensures a proper +format+ is given.
-      def validate_format(format)
-        case format
-        when nil:
-          return 'json'
-        when FORMATS.include?(format):
-          return format
-        end
+      # Returns true if the given +format+ is invalid.
+      def invalid_format?(format)
+        return true unless FORMATS.include?(format)
       end
 
-      # Ensures a proper +uri+ is given.
-      def validate_uri(uri)
-        raise Errors::InvalidURI unless uri
-        raise Errors::InvalidURI if uri.grep(/^(#{PROTOCOLS.join('|')}):\/\/\w/).empty?
-        return uri
+      # Returns true if the given +uri+ is invalid.
+      def invalid_uri?(uri)
+        uri.grep(/^(#{PROTOCOLS.join('|')}):\/\/\w/).empty?
       end
     end # of URI
 
