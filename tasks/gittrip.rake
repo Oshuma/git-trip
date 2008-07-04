@@ -34,10 +34,10 @@ end
 def gen_test_images(dir)
   repo = GitTrip::Gitter::Dir.new(APP_ROOT)
   FORMATS.each do |format|
-    repo.commits.each do |commit|
+    repo.commits.each_with_index do |commit, index|
       painter = GitTrip::Painter.new(commit)
       painter.paint!
-      painter.picture.write("#{dir}/#{format}/#{commit}.#{format}")
+      painter.picture.write("#{dir}/#{format}/#{index}.#{format}")
     end
   end
 end
