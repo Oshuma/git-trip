@@ -6,7 +6,11 @@ describe Painter do
     @painter = Painter.new(@commit)
   end
 
-  it "should instantiate with a single commit" do
+  it "should have access to Image" do
+    Painter::Image.should be_a_kind_of(Class)
+  end
+
+  it "should instantiate" do
     @painter.should be_instance_of(Painter)
   end
 
