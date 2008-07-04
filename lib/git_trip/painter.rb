@@ -5,10 +5,10 @@ module GitTrip
   # hash of +options+ (see DEFAULTS).
   #
   # +options+ can contain:
-  # * <tt>format</tt>: Image format (ex. 'png', 'gif', etc).
-  # * <tt>style</tt>: See STYLES.
-  # * <tt>width</tt>: Generated image width.
-  # * <tt>height</tt>: Generated image height.
+  # * <tt>format</tt>: Image format; anything Magick::Image.new supports (ex. 'png', 'gif', etc).
+  # * <tt>style</tt>: Generated image style; see STYLES.
+  # * <tt>width</tt>: Generated commit image width.
+  # * <tt>height</tt>: Generated commit image height.
   class Painter
     include Magick
 
@@ -37,8 +37,13 @@ module GitTrip
       @picture = nil
     end
 
-    # Generate an Image based on <tt>@canvas</tt>.
+    # Generate an image based on <tt>@canvas</tt> and <tt>@options[:style]</tt>.
     def paint!
+      # Need to set these locally, since <tt>Magick::ImageList#montage</tt>
+      # can't access <tt>@options</tt> in it's block, for some reason.
+      width  = @options[:width]
+      height = @options[:height]
+
       case @options[:style]
       when 'horizontal'
         @picture = @canvas.append(false)
@@ -46,9 +51,7 @@ module GitTrip
         @picture = @canvas.append(true)
       when 'montage'
         @picture = @canvas.montage do
-          self.geometry = Magick::Geometry.new(50, 50, 0, 0)
-          # self.geometry = Magick::Geometry.new(@options[:width], @options[:height], 0, 0)
-          # self.geometry = Magick::Geometry.new("#{@options[:width]}x#{@options[:height]}+0+0")
+          self.geometry = Magick::Geometry.new(width, height, 0, 0)
         end
       end
     end
@@ -77,13 +80,13 @@ module GitTrip
       return true unless STYLES.include?(style)
     end
 
-    # Returns a 5 element array of RGB color codes, and the
+    # Returns a 6 element array of RGB color codes, and the
     # remaining 4 characters (as a string).
     def split_colors
-      array = []
-      all   = @sha.split('')
-      6.times { array << all.slice!(0, 6).to_s }
-      return array, all.to_s
+      array     = []
+      remainder = @sha.split('') # Yes, it's not the remainder now, but it will be at the return statement.
+      6.times { array << remainder.slice!(0, 6).to_s }
+      return array, remainder.to_s
     end
   end # of Painter
 

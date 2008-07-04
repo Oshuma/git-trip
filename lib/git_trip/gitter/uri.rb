@@ -6,7 +6,6 @@ module GitTrip
     # * <tt>uri</tt>: URI which returns information about a git repository (see +format+).
     #
     # <tt>options</tt> can be a hash containing:
-    # <b>Optional:</b>
     # * <tt>format</tt>: Defaults to 'json'; see FORMATS.
     class URI < Gitter::Base
       FORMATS   = %w{ json xml yaml }

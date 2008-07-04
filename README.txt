@@ -12,21 +12,44 @@ Visualize git commit SHAs.  It's nerd acid!
 
 == SYNOPSIS:
 
-Code sample will be added soon...maybe.
+See the API docs for more options and class specific examples.
+
+ # Grab repository information.
+ repo = GitTrip::Gitter::Dir.new('/path/to/repo')
+ # .. or ..
+ repo = GitTrip::Gitter::URI.new('http://domain.com/path/to/repo')
+
+ # Now that you have a repository, you can do cool shit.
+ repo.commits.each do |commit|
+   # Painter requires a commit SHA (string).
+   painter = GitTrip::Painter.new(commit)
+
+   painter.paint! # this does the work of creating a commit specific image
+
+   # Depending on the <tt>:style</tt> option passed to Painter.new,
+   # +picture+ now holds either a Magick::Image or Magick::ImageList,
+   # so all of their respective methods are supported.
+   painter.picture.display
+ end
 
 == REQUIREMENTS:
 
-* JSON
-* RMagick (and it's requirements)
+* Grit - For reading git information from a directory.
+* JSON - For reading git information from a URI.
+* RMagick
 
 == INSTALL:
 
-I'll let you know...
+ # From Github:
+ $ gem sources -a http://gems.github.com/ # (You only need to do this once.)
+ $ gem install Oshuma-git-trip
 
 == LICENSE:
 
            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
                    Version 2, December 2004
+             	     http://sam.zoy.org/wtfpl/
+
 
 Copyright (C) 2008 Dale Campbell <dale@save-state.net>
 

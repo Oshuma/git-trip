@@ -14,14 +14,18 @@ module GitTrip
 
       private
 
-      # # Loads the <tt>@data</tt> hash with repo information.
+      # # Loads the <tt>@data</tt> hash with repository information.
       def setup_data_hash
-        load_repo_data
+        load_repo_commits
       end
 
-      # Returns a hash of repository information.
-      def load_repo_data
-        @data[:commits] = @repo.commits.map { |c| c.to_s  }
+      # Loads a hash of commits into <tt>@data[:commits]</tt>.
+      def load_repo_commits
+        commits = []
+        @repo.commits(@repo.head.name, @repo.commit_count).map do |c|
+          commits << c.to_s
+        end
+        @data[:commits] = commits
       end
     end # of Dir
 
