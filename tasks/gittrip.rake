@@ -33,12 +33,11 @@ end
 # Uses APP_ROOT as the git repository.
 def gen_test_images(dir)
   repo = GitTrip::Gitter::Dir.new(APP_ROOT)
-  repo.commits.each_with_index do |commit, index|
-    painter = GitTrip::Painter.new(commit)
-    painter.colors.each do |color|
-      FORMATS.each do |format|
-        painter.paint(color).write("#{dir}/#{format}/#{index}-#{color}.#{format}")
-      end
+  FORMATS.each do |format|
+    repo.commits.each do |commit|
+      painter = GitTrip::Painter.new(commit)
+      painter.paint!
+      painter.canvas.write("#{dir}/#{format}/#{commit}.#{format}")
     end
   end
 end

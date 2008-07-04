@@ -6,18 +6,19 @@ module GitTrip
   #
   # +options+ can contain:
   # * <tt>format</tt>: Image format (ex. 'png', 'gif', etc).
-  # * <tt>size</tt>: Generated image size; array containing [width, height]
+  # * <tt>width</tt>: Generated image size; array containing [width, height]
   class Painter
     include Magick
 
-    DEFAULT_WIDTH  = 100
-    DEFAULT_HEIGHT = 100
+    DEFAULT_WIDTH  = 50
+    DEFAULT_HEIGHT = 50
     DEFAULT_OPTS = {
       :format => 'png',
-      :size => [DEFAULT_WIDTH, DEFAULT_HEIGHT]
+      :width  => DEFAULT_WIDTH,
+      :height => DEFAULT_HEIGHT
     }
 
-    attr_reader :colors
+    attr_reader :canvas, :colors
 
     def initialize(sha, options = {})
       raise Errors::RTFM unless sha.is_a?(String)
@@ -25,20 +26,18 @@ module GitTrip
       @sha     = sha
       @options = DEFAULT_OPTS.merge(options)
       @colors, @remainder = split_colors
+      @canvas = nil
     end
 
-    # Returns Image objects based on the <tt>@colors</tt> array.
-    def images
-      @colors.map { |color| self.paint(color) }
-    end
-
-    # Generate an Image based on the give +color+ code.
-    def paint(color)
-      cols = @options[:size].first
-      rows = @options[:size].last
-      Image.new(cols, rows) do
-        self.background_color = "\##{color}"
+    # Generate an Image based on <tt>@colors</tt>.
+    def paint!
+      @canvas = ImageList.new
+      @colors.each do |color|
+        @canvas.new_image(@options[:width], @options[:height]) do
+          self.background_color = "\##{color}"
+        end
       end
+      @canvas = @canvas.append(false)
     end
 
     private

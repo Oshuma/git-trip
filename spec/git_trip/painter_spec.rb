@@ -37,16 +37,16 @@ describe Painter do
     sha.should eql(@commit)
   end
 
-  it "should accept a custom image format" do
+  it "should accept a custom format" do
     Painter.new(@commit, :format => 'gif').should be_instance_of(Painter)
   end
 
-  it "should create an image with the given RGB color code" do
-    color = @commit.slice(0, 6)
-    @painter.paint(color).should be_instance_of(Magick::Image)
+  it "should accept a custom size" do
+    Painter.new(@commit, :size => [25, 25]).should be_instance_of(Painter)
   end
 
-  it "should return an array of Magick::Image objects" do
-    @painter.images.each { |image| image.should be_instance_of(Magick::Image) }
+  it "should paint an image with it's colors" do
+    @painter.paint!.should_not be_false
+    @painter.canvas.should be_instance_of(Magick::ImageList)
   end
 end
