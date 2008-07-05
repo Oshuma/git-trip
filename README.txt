@@ -21,9 +21,9 @@ If you find bugs, or have suggestions, post on the RubyForge tracker and forums,
 
 === REQUIREMENTS:
 
-* Grit - For reading git information from a directory.
-* JSON - For reading git information from a URI.
-* RMagick
+* Grit - Used to read git information from a local directory.
+* JSON - Used to read git information from a URI.
+* RMagick - To do the magic.
 
 === INSTALL:
 
