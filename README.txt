@@ -9,6 +9,29 @@ Visualize git commit SHAs.  It's nerd acid!
 
 === SYNOPSIS:
 
+GitTrip is a unique, completely useless, way of visualizing git commit SHA
+strings.  Since a single SHA is 40 characters (0-9, a-f), you can derive
+6 RGB colors from each git object.  (40/6 == 6 with 4 characters left over)
+With these 6 colors comes a wide range of possibilities.  GitTrip::Painter will
+support multiple 'rendering modes' which will determine what the resulting
+commit image will look like.
+
+If you find bugs, or have suggestions, post on the RubyForge tracker and forums, respectively.
+
+=== REQUIREMENTS:
+
+* Grit - For reading git information from a directory.
+* JSON - For reading git information from a URI.
+* RMagick
+
+=== INSTALL:
+
+ # From Github:
+ $ gem sources -a http://gems.github.com/ # (You only need to do this once.)
+ $ gem install Oshuma-git-trip
+
+=== USAGE:
+
 See the individual class docs for more options and specific examples.
 
  # Load it up!
@@ -32,22 +55,6 @@ See the individual class docs for more options and specific examples.
    # so all of their respective methods are supported.
    painter.picture.display
  end
-
-=== REQUIREMENTS:
-
-* Grit - For reading git information from a directory.
-* JSON - For reading git information from a URI.
-* RMagick
-
-=== INSTALL:
-
- # From Github:
- $ gem sources -a http://gems.github.com/ # (You only need to do this once.)
- $ gem install Oshuma-git-trip
-
-=== USAGE:
-
-Check the API docs at the RubyForge link above.
 
 === LICENSE:
 
