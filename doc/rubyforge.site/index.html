@@ -1,28 +1,104 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html>
-  <head>
-    <title>GitTrip - Nerd acid.</title>
-  	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-  	<meta name="author" content="Dale Campbell <dale@save-state.net>" />
-  </head>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>GitTrip: Home</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<meta name="author" content="Dale Campbell <dale@save-state.net>" />
+  <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+</head>
 
-  <body>
-    <h1>GitTrip</h1>
-
-    <p>
-      <ul>
-        <li><a href="/api/" title="API Documentation">API Documentation</a></li>
-        <li><a href="/issues/" title="Project Issue Status">Project Issue Status</a></li>
+<body>
+  <div id="header">
+    <h1>GitTrip: Nerd Acid</h1>
+    <div id="menu">
+      <ul id="nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/usage.html">Usage</a>
       </ul>
-    </p>
+    </div>
+  </div>
 
-    <p>
-      Check the following sites for more information:
-      <ul>
-        <li><a href="http://github.com/Oshuma/git-trip/" title="Github">Github</a></li>
-        <li><a href="http://rubyforge.org/projects/git-trip/" title="RubyForge">RubyForge</a></li>
-      </ul>
-    </p>
-  </body>
+  <div id="content">
+    <div id="right">
+      <p>
+      GitTrip is a unique, completely useless, way of visualizing git commit SHA strings.
+      Since a single SHA is 40 characters (0-9a-f), you can (for example) derive 6 RGB colors
+      from each git object.  (40/6 == 6 with 4 characters left over)  With these 6 colors
+      comes a wide range of possibilities. GitTrip::Painter will support multiple
+      'rendering modes' which will determine what the resulting commit image will look like.
+      </p>
+
+      <p>
+      If you find bugs, or have suggestions, post them on the RubyForge
+      <a href="http://rubyforge.org/tracker/?group_id=6594">tracker</a> and
+      <a href="http://rubyforge.org/forum/?group_id=6594">forums</a>, respectively.
+      </p>
+
+      <h2>Requirements</h2>
+      <p>
+        <ul>
+          <li><a href="http://rmagick.rubyforge.org/">RMagick</a></li>
+          <li><a href="http://grit.rubyforge.org/">Grit</a></li>
+          <li><a href="http://json.rubyforge.org/">JSON</a></li>
+          <li><a href="http://mime-types.rubyforge.org/">mime-types</a></li>
+          <li><a href="http://raa.ruby-lang.org/project/open4/">open4</a></li>
+        </ul>
+      </p><br />
+
+      <h2>Install</h2>
+      <p>
+        <pre>
+# From Github:
+$ gem sources -a http://gems.github.com/ # (You only need to do this once.)
+$ gem install Oshuma-git-trip
+        </pre>
+      </p>
+
+      <h2>License</h2>
+      <pre>
+         DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+                 Version 2, December 2004
+                 http://sam.zoy.org/wtfpl/
+
+Copyright &copy; 2008 Dale Campbell &lt;dale@save-state.net&gt;
+
+Everyone is permitted to copy and distribute verbatim or modified
+copies of this license document, and changing it is allowed as long
+as the name is changed.
+
+         DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+0. You just DO WHAT THE FUCK YOU WANT TO.
+      </pre>
+    </div>
+
+    <div id="left">
+      <div class="box">
+        <h2>Project:</h2>
+        <ul>
+          <li><a href="/api/" title="API Documentation">API Documentation</a></li>
+          <li><a href="/issues/" title="Issue Status">Issue Status</a></li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <h2>Links:</h2>
+        <ul>
+          <li><a href="http://github.com/Oshuma/git-trip/" title="Source Code">Source Code</a></li>
+          <li><a href="http://rubyforge.org/projects/git-trip/" title="Project Page">Project Page</a></li>
+        </ul>
+      </div>
+
+
+      <div class="box">
+        <div style="font-size: 0.8em;">
+          &copy; 2008 <a href="http://corrupt.save-state.net/">Dale Campbell</a><br />
+          Design by <a href="http://www.minimalistic-design.net">Minimalistic Design</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
 </html>

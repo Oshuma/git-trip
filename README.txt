@@ -11,24 +11,23 @@ Visualize git commit SHAs.  It's nerd acid!
 === SYNOPSIS:
 
 GitTrip is a unique, completely useless, way of visualizing git commit SHA
-strings.  Since a single SHA is 40 characters (0-9a-f), you can derive
-6 RGB colors from each git object.  (40/6 == 6 with 4 characters left over)
+strings.  Since a single SHA is 40 characters (0-9a-f), you can (for example)
+derive 6 RGB colors from each git object.  (40/6 == 6 with 4 characters left over)
 With these 6 colors comes a wide range of possibilities.  GitTrip::Painter will
 support multiple 'rendering modes' which will determine what the resulting
 commit image will look like.
 
-If you find bugs, or have suggestions, post on the RubyForge tracker and forums, respectively.
+If you find bugs, or have suggestions, post them on the RubyForge
+tracker (http://rubyforge.org/tracker/?group_id=6594) and
+forums (http://rubyforge.org/forum/?group_id=6594), respectively.
 
 === REQUIREMENTS:
 
-* RMagick - To do the magic.
-* Grit - Used to read git information from a local directory.
-* JSON - Used to read git information from a URI.
-
-Others:
-
-* mime-tipes
-* open4
+* RMagick - http://rmagick.rubyforge.org/
+* Grit - http://grit.rubyforge.org/
+* JSON - http://json.rubyforge.org/
+* mime-types - http://mime-types.rubyforge.org/
+* open4 - http://raa.ruby-lang.org/project/open4/
 
 === INSTALL:
 
