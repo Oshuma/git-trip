@@ -147,4 +147,14 @@ describe Painter do
     @painter.paint!.should_not be_false
     @painter.picture.should be_instance_of(Magick::Image)
   end
+
+  it "should have a name" do
+    @painter.name.should_not be_nil
+    @painter.name.should be_instance_of(String)
+  end
+
+  it "should allow a custom name" do
+    @painter = Painter.new(@commit, :name => 'Awesome')
+    @painter.name.should eql('Awesome')
+  end
 end

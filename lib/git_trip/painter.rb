@@ -17,7 +17,7 @@ module GitTrip
       vertical
     }
 
-    attr_reader :canvas, :colors, :picture
+    attr_reader :canvas, :colors, :name, :picture
 
     # Takes a single 40 character +sha+ string and an (optional)
     # hash of +options+ (see DEFAULTS).
@@ -26,6 +26,7 @@ module GitTrip
     # +options+ can contain:
     # * <tt>format</tt>: Image format; anything Magick::Image.new supports (ex. 'png', 'gif', etc).
     # * <tt>label</tt>: If true, the commit SHA will be included in the image; defaults to false.
+    # * <tt>name</tt>: The text to use above the commit image; only used if +style+ 'montage'.
     # * <tt>style</tt>: Generated image style; see STYLES.
     # * <tt>width</tt>: Generated commit image width.
     # * <tt>height</tt>: Generated commit image height.
@@ -36,6 +37,7 @@ module GitTrip
       @options = DEFAULTS.merge(options)
       raise Errors::InvalidStyle if invalid_style?(@options[:style])
       @colors, @remainder = split_colors
+      @name = (@options[:name] || create_name)
       @canvas  = build_canvas
       @picture = nil
     end
@@ -60,9 +62,13 @@ module GitTrip
       # can't access <tt>@options</tt> in it's block, for some reason.
       width  = @options[:width]
       height = @options[:height]
+      name   = @name
 
       @picture = @canvas.montage do
         self.geometry = Magick::Geometry.new(width, height, 0, 0)
+        self.tile = '6x1' # horizontal
+        # self.tile = '1x6' # vertical
+        self.title = name
       end.flatten_images
     end
 
@@ -104,19 +110,31 @@ module GitTrip
     # Builds an image with the given +text+.
     # TODO: Find a sane way of setting the pointsize.
     # TODO: Allow a custom font options.
-      def build_label(text)
-        shading = false
+    def build_label(text)
+      shading = false
 
-        label = Magick::Image.new(@options[:width], @options[:height])
-        image = Magick::Draw.new
-        image.gravity = Magick::CenterGravity
-        image.pointsize = @options[:width] / 4
-        image.font = 'Helvetica'
-        image.font_weight = Magick::NormalWeight
-        image.stroke = 'none'
-        image.annotate(label, 0, 0, 0, 0, text)
-        return label.shade(shading, 310, 30)
-      end
+      label = Magick::Image.new(@options[:width], @options[:height])
+      image = Magick::Draw.new
+      image.gravity = Magick::CenterGravity
+      image.pointsize = @options[:width] / 4
+      image.font = 'Helvetica'
+      image.font_weight = Magick::NormalWeight
+      image.stroke = 'none'
+      image.annotate(label, 0, 0, 0, 0, text)
+      label = label.shade(shading, 310, 30)
+
+      return label
+    end
+
+    # Generate a name based on the remaining 4 characters of the SHA.
+    # Returns the created name.
+    # Only called if <tt>@options[:name]</tt> is not given.
+    def create_name
+      colors = @colors
+      first = colors.sort_by{rand}.first.split('')[0..2].sort_by{rand}.to_s
+      last  = colors.sort_by{rand}.last.split('')[0..2].sort_by{rand}.to_s
+      return "--- #{first}.#{@remainder}.#{last} ---"
+    end
 
     # Returns true if +sha+ is invalid.
     # TODO: Probably a better way of validating a SHA.

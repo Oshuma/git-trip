@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Refactor the Painter#paint_* methods to use the same image creation method.
+desc: ""
+type: :task
+component: git-trip
+release: beta
+reporter: Dale Campbell <dale@save-state.net>
+status: :unstarted
+disposition: 
+creation_time: 2008-07-05 18:39:43.331739 Z
+references: []
+
+id: d4d7108f55e0c38cfb731b6b6e128e0994d8fd52
+log_events: 
+- - 2008-07-05 18:39:44.139757 Z
+  - Dale Campbell <dale@save-state.net>
+  - created
+  - ""

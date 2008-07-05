@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: header option for Painter.new
+desc: Which should print the entire commit SHA at the top, if true.
+type: :feature
+component: git-trip
+release: beta
+reporter: Dale Campbell <dale@save-state.net>
+status: :unstarted
+disposition: 
+creation_time: 2008-07-05 15:11:12.208910 Z
+references: []
+
+id: 892a0655b9485fcde4d8c74fb8b91166269165a4
+log_events: 
+- - 2008-07-05 15:11:15.057357 Z
+  - Dale Campbell <dale@save-state.net>
+  - created
+  - ""
