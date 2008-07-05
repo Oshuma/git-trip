@@ -46,6 +46,36 @@ repo.commits.each do |commit|
  painter.picture.display
 end
       </pre>
+
+      <p>Here's an image that was generated from the actual GitTrip repository:</p>
+
+      <img src="images/git-trip-example.png" />
+
+      <p>Here's the SHA broken down:</p>
+
+      <p style="font-family: courier;">
+        <span style="color: black; padding: 2px;">
+          0996d1ec3c0da1ff5ac91e5ed5678139932e ad4d<br />
+        </span>
+        <span style="background-color: #111; padding: 2px;">
+          <span style="color: #0996d1">0996d1</span><span style="color: #ec3c0d">ec3c0d</span><span style="color: #a1ff5a">a1ff5a</span><span style="color: #0996d1">c91e5e</span><span style="color: #d56781">d56781</span><span style="color: #39932e">39932e</span></span>
+        name
+      </p>
+
+      <p>
+        By default, the image 'name' (NOT filename) contains the remaining 4 characters
+        interpolated with some other random data pulled from the SHA.  If you look at the
+        above comparison, you'll see that the last 4 characters are 'ad4d' and are in the
+        middle of the image header string: '--- ec3.ad4d.9c1 ---'  The other characters
+        are random splits of all repo color codes.  I just wanted to have 3 characters
+        on each side of the name, but wanted the characters to still be associated with
+        the repository in some way.
+      </p>
+
+      <p>
+        This is only one render mode available, and only shows a sliver of the possible
+        image combinations/effects.
+      </p>
     </div>
 
     <div id="left">

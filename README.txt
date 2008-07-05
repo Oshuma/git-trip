@@ -1,8 +1,8 @@
 = GitTrip
 
 Author:: Dale Campbell <dale@save-state.net>
-Github:: http://github.com/Oshuma/git-trip/
-RubyForge:: http://git-trip.rubyforge.org/
+Code:: http://github.com/Oshuma/git-trip/
+Site:: http://git-trip.rubyforge.org/
 
 === DESCRIPTION:
 
@@ -17,9 +17,11 @@ With these 6 colors comes a wide range of possibilities.  GitTrip::Painter will
 support multiple 'rendering modes' which will determine what the resulting
 commit image will look like.
 
-If you find bugs, or have suggestions, post them on the RubyForge
-tracker (http://rubyforge.org/tracker/?group_id=6594) and
-forums (http://rubyforge.org/forum/?group_id=6594), respectively.
+If you find bugs, or have suggestions, post them on the RubyForge tracker and
+forums, respectively.
+
+Tracker:: http://rubyforge.org/tracker/?group_id=6594
+Forums:: http://rubyforge.org/forum/?group_id=6594
 
 === REQUIREMENTS:
 
