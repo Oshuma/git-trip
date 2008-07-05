@@ -1,1 +1,5 @@
+doc/api/*
+doc/issues/*
+doc/rubyforge.site/api/*
+doc/rubyforge.site/issues/*
 sandbox/*
