@@ -66,7 +66,7 @@ module GitTrip
 
       @picture = @canvas.montage do
         self.geometry = Magick::Geometry.new(width, height, 0, 0)
-        self.tile = '6x1' # horizontal
+        # self.tile = '6x1' # horizontal
         # self.tile = '1x6' # vertical
         self.title = name
       end.flatten_images
