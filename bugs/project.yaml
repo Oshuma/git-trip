@@ -1,0 +1,16 @@
+--- !ditz.rubyforge.org,2008-03-06/project 
+name: git-trip
+version: "0.3"
+components: 
+- !ditz.rubyforge.org,2008-03-06/component 
+  name: git-trip
+releases: 
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: beta
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2008-07-05 14:53:17.351387 Z
+    - Dale Campbell <dale@save-state.net>
+    - created
+    - The beta release of GitTrip.

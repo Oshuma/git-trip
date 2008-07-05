@@ -4,7 +4,7 @@
 DOC_ROOT      = File.join(APP_ROOT, 'doc') unless defined? DOC_ROOT
 LOCAL_SITE    = File.join(DOC_ROOT, 'rubyforge.site')
 SITE_API      = File.join(LOCAL_SITE, 'api')
-# SITE_ISSUES   = File.join(LOCAL_SITE, 'issues')
+SITE_ISSUES   = File.join(LOCAL_SITE, 'issues')
 
 # The remote directory the files will be scp'ed to.
 REMOTE_SITE = 'git-trip.rubyforge.org:/var/www/gforge-projects/git-trip'
@@ -21,14 +21,14 @@ namespace :gittrip do
     task :clear_local do
       header("Clearing local site directory: #{LOCAL_SITE}")
       sh "rm -rf #{SITE_API}"      if File.exists? SITE_API
-      # sh "rm -rf #{SITE_ISSUES}"   if File.exists? SITE_ISSUES
+      sh "rm -rf #{SITE_ISSUES}"   if File.exists? SITE_ISSUES
     end
 
     # Copies the issue and docs to the site directory.
     task :setup_dir => [ :clear_local, :run_external_tasks ] do
       header('Copying issues and API docs to the site directory.')
       FileUtils.cp_r(API_DOCS, LOCAL_SITE)
-      # FileUtils.cp_r(ISSUE_DIR, LOCAL_SITE)
+      FileUtils.cp_r(ISSUE_DIR, LOCAL_SITE)
     end
 
     desc 'Upload the issues and docs to the website'
@@ -42,7 +42,7 @@ namespace :gittrip do
     # Used to shorten the setup_site_dir task definition.
     task :run_external_tasks do
       Rake::Task['docs:rebuild'].invoke
-      # Rake::Task['issues:report'].invoke
+      Rake::Task['issues:report'].invoke
     end
   end
 end
