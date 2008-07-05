@@ -1,6 +1,7 @@
 = GitTrip
 
 Github:: http://github.com/Oshuma/git-trip/
+RubyForge:: http://git-trip.rubyforge.org/
 
 === DESCRIPTION:
 
@@ -46,7 +47,7 @@ See the individual class docs for more options and specific examples.
 
 === USAGE:
 
-I'll get some API docs up one day.
+Check the API docs at the RubyForge link above.
 
 === LICENSE:
 
