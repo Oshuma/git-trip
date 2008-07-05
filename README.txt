@@ -1,5 +1,6 @@
 = GitTrip
 
+Author:: Dale Campbell <dale@save-state.net>
 Github:: http://github.com/Oshuma/git-trip/
 RubyForge:: http://git-trip.rubyforge.org/
 
@@ -10,7 +11,7 @@ Visualize git commit SHAs.  It's nerd acid!
 === SYNOPSIS:
 
 GitTrip is a unique, completely useless, way of visualizing git commit SHA
-strings.  Since a single SHA is 40 characters (0-9, a-f), you can derive
+strings.  Since a single SHA is 40 characters (0-9a-f), you can derive
 6 RGB colors from each git object.  (40/6 == 6 with 4 characters left over)
 With these 6 colors comes a wide range of possibilities.  GitTrip::Painter will
 support multiple 'rendering modes' which will determine what the resulting
