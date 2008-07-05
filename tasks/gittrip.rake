@@ -1,5 +1,8 @@
-FORMATS = %w{ gif jpg png }
-IMG_DIR = ENV['IMG_DIR'] || File.join(APP_ROOT, 'sandbox/git-trip')
+FORMATS  = %w{ gif jpg png }
+# Output directory.
+IMG_DIR  = ENV['IMG_DIR']  || File.join(APP_ROOT, 'sandbox/git-trip')
+# Repository to use in image generation.
+IMG_REPO = ENV['IMG_REPO'] || APP_ROOT
 
 namespace :gittrip do
   namespace :test do
@@ -8,7 +11,7 @@ namespace :gittrip do
 
     namespace :images do
       task :generate do
-        gen_test_images(IMG_DIR)
+        gen_test_images(IMG_DIR, IMG_REPO)
       end
 
       desc 'Remove the generated test images'
@@ -16,7 +19,7 @@ namespace :gittrip do
         FORMATS.each do |format|
           dir = File.join(IMG_DIR, format)
           header("Removing images in #{dir}")
-          sh "rm -rf #{dir}/*"
+          sh "rm -rf #{dir}/*" if File.exists?(dir)
         end
       end
 
@@ -30,14 +33,16 @@ namespace :gittrip do
 end
 
 # Generate test images in the given directory.
-# Uses APP_ROOT as the git repository.
-def gen_test_images(dir)
-  repo = GitTrip::Gitter::Dir.new(APP_ROOT)
+def gen_test_images(dir, repo_dir)
+  repo = GitTrip::Gitter::Dir.new(repo_dir)
   FORMATS.each do |format|
+    base_dir = "#{dir}/#{format}"
+    FileUtils.mkpath(base_dir) unless File.exists?(base_dir)
     repo.commits.each_with_index do |commit, index|
       painter = GitTrip::Painter.new(commit)
       painter.paint!
-      painter.picture.write("#{dir}/#{format}/#{index}.#{format}")
+      painter.picture.write("#{base_dir}/#{index}.#{format}")
     end
+    header("Images written to #{base_dir}")
   end
 end
