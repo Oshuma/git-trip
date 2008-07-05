@@ -103,16 +103,19 @@ module GitTrip
 
     # Builds an image with the given +text+.
     # TODO: Find a sane way of setting the pointsize.
+    # TODO: Allow a custom font options.
       def build_label(text)
+        shading = false
+
         label = Magick::Image.new(@options[:width], @options[:height])
         image = Magick::Draw.new
         image.gravity = Magick::CenterGravity
         image.pointsize = @options[:width] / 4
-        image.font = 'Times'
-        image.font_weight = Magick::BoldWeight
+        image.font = 'Helvetica'
+        image.font_weight = Magick::NormalWeight
         image.stroke = 'none'
         image.annotate(label, 0, 0, 0, 0, text)
-        return label.shade(true, 310, 30)
+        return label.shade(shading, 310, 30)
       end
 
     # Returns true if +sha+ is invalid.
