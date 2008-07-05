@@ -5,7 +5,7 @@ require 'rubygems'
 require 'digest/sha1'
 require 'json'
 require 'open-uri'
-require 'rmagick'
+require 'RMagick'
 
 # ...in ./vendor/
 require 'vendor/grit/lib/grit'

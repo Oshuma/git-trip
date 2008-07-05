@@ -26,7 +26,7 @@ module GitTrip
     # +options+ can contain:
     # * <tt>format</tt>: Image format; anything Magick::Image.new supports (ex. 'png', 'gif', etc).
     # * <tt>label</tt>: If true, the commit SHA will be included in the image; defaults to false.
-    # * <tt>name</tt>: The text to use above the commit image; only used if +style+ 'montage'.
+    # * <tt>name</tt>: The text to use above the commit image; only used if +style+ is 'montage'.
     # * <tt>style</tt>: Generated image style; see STYLES.
     # * <tt>width</tt>: Generated commit image width.
     # * <tt>height</tt>: Generated commit image height.
@@ -142,7 +142,7 @@ module GitTrip
       sha.size != 40
     end
 
-    # Returns true if +options[:style]+ exists and is not in STYLES.
+    # Returns true if +style+ is not in STYLES.
     def invalid_style?(style)
       return true unless STYLES.include?(style)
     end
