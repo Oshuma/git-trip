@@ -90,9 +90,20 @@ describe Painter do
     Painter.new(@commit, :size => [25, 25]).should be_instance_of(Painter)
   end
 
-  it "should paint a montage image (list)" do
+  it "should paint a montage image" do
     @painter.paint!.should_not be_false
-    @painter.picture.should be_instance_of(Magick::ImageList)
+    @painter.picture.should be_instance_of(Magick::Image)
+  end
+
+  it "should manually call paint_montage" do
+    @painter.paint_montage.should_not be_false
+    @painter.picture.should be_instance_of(Magick::Image)
+  end
+
+  it "should raise Errors::RTFM if not a montage" do
+    lambda do
+      Painter.new(@commit, :style => 'horizontal').paint_montage
+    end.should raise_error(Errors::RTFM)
   end
 
   it "should paint a horizontal image" do
@@ -101,8 +112,38 @@ describe Painter do
     @painter.picture.should be_instance_of(Magick::Image)
   end
 
+  it "should manually call paint_horizontal" do
+    @painter = Painter.new(@commit, :style => 'horizontal')
+    @painter.paint_horizontal.should_not be_false
+    @painter.picture.should be_instance_of(Magick::Image)
+  end
+
+  it "should raise Errors::RTFM if not horizontal style" do
+    lambda do
+      Painter.new(@commit, :style => 'montage').paint_horizontal
+    end.should raise_error(Errors::RTFM)
+  end
+
   it "should paint a vertical image" do
     @painter = Painter.new(@commit, :style => 'vertical')
+    @painter.paint!.should_not be_false
+    @painter.picture.should be_instance_of(Magick::Image)
+  end
+
+  it "should manually call paint_vertical" do
+    @painter = Painter.new(@commit, :style => 'vertical')
+    @painter.paint_vertical.should_not be_false
+    @painter.picture.should be_instance_of(Magick::Image)
+  end
+
+  it "should raise Errors::RTFM if not vertical style" do
+    lambda do
+      Painter.new(@commit, :style => 'montage').paint_vertical
+    end.should raise_error(Errors::RTFM)
+  end
+
+  it "should create an image with commits color labels" do
+    @painter = Painter.new(@commit, :label => true)
     @painter.paint!.should_not be_false
     @painter.picture.should be_instance_of(Magick::Image)
   end

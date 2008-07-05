@@ -5,6 +5,7 @@ module GitTrip
     include Magick
 
     DEFAULTS = {
+      :label  => false,
       :style  => 'montage',
       :width  => 50,
       :height => 50
@@ -20,9 +21,11 @@ module GitTrip
 
     # Takes a single 40 character +sha+ string and an (optional)
     # hash of +options+ (see DEFAULTS).
+    # TODO: Implement @options[:format]
     #
     # +options+ can contain:
     # * <tt>format</tt>: Image format; anything Magick::Image.new supports (ex. 'png', 'gif', etc).
+    # * <tt>label</tt>: If true, the commit SHA will be included in the image; defaults to false.
     # * <tt>style</tt>: Generated image style; see STYLES.
     # * <tt>width</tt>: Generated commit image width.
     # * <tt>height</tt>: Generated commit image height.
@@ -37,37 +40,80 @@ module GitTrip
       @picture = nil
     end
 
-    # Generate an image based on <tt>@canvas</tt> and <tt>@options[:style]</tt>.
+    # Paint a <tt>@picture</tt> based on <tt>@canvas</tt> and <tt>@options[:style]</tt>.
     def paint!
+      case @options[:style]
+      when 'horizontal': paint_horizontal
+      when 'vertical':   paint_vertical
+      when 'montage':    paint_montage
+      else
+        raise Errors::InvalidStyle
+      end
+    end
+
+    # Builds the <tt>@picture</tt>.
+    # Called if <tt>@options[:style] == 'montage'</tt>.
+    def paint_montage
+      raise Errors::RTFM unless @options[:style] == 'montage'
+
       # Need to set these locally, since <tt>Magick::ImageList#montage</tt>
       # can't access <tt>@options</tt> in it's block, for some reason.
       width  = @options[:width]
       height = @options[:height]
 
-      case @options[:style]
-      when 'horizontal'
-        @picture = @canvas.append(false)
-      when 'vertical'
-        @picture = @canvas.append(true)
-      when 'montage'
-        @picture = @canvas.montage do
-          self.geometry = Magick::Geometry.new(width, height, 0, 0)
-        end
-      end
+      @picture = @canvas.montage do
+        self.geometry = Magick::Geometry.new(width, height, 0, 0)
+      end.flatten_images
+    end
+
+    # Builds the <tt>@picture</tt>.
+    # Called if <tt>@options[:style] == 'horizontal'</tt>.
+    def paint_horizontal
+      raise Errors::RTFM unless @options[:style] == 'horizontal'
+      @picture = @canvas.append(false)
+    end
+
+    # Builds the <tt>@picture</tt>.
+    # Called if <tt>@options[:style] == 'vertical'</tt>.
+    def paint_vertical
+      raise Errors::RTFM unless @options[:style] == 'vertical'
+      @picture = @canvas.append(true)
     end
 
     private
 
-    # Builds a Magick::ImageList for the <tt>@colors</tt>.
+    # Applies a +text+ string to a given +image+.
+    def apply_label(text, image)
+      image.composite(build_label(text),
+        Magick::CenterGravity,
+        Magick::HardLightCompositeOp)
+    end
+
+    # Builds a Magick::ImageList canvas for the <tt>@colors</tt>.
     def build_canvas
       canvas = ImageList.new
       @colors.each do |color|
-        canvas.new_image(@options[:width], @options[:height]) do
+        image = Magick::Image.new(@options[:width], @options[:height]) do
           self.background_color = "\##{color}"
         end
+        canvas << (@options[:label] ? apply_label(color, image) : image)
       end
       return canvas
-    end
+    end # of build_canvas
+
+    # Builds an image with the given +text+.
+    # TODO: Find a sane way of setting the pointsize.
+      def build_label(text)
+        label = Magick::Image.new(@options[:width], @options[:height])
+        image = Magick::Draw.new
+        image.gravity = Magick::CenterGravity
+        image.pointsize = @options[:width] / 4
+        image.font = 'Times'
+        image.font_weight = Magick::BoldWeight
+        image.stroke = 'none'
+        image.annotate(label, 0, 0, 0, 0, text)
+        return label.shade(true, 310, 30)
+      end
 
     # Returns true if +sha+ is invalid.
     # TODO: Probably a better way of validating a SHA.

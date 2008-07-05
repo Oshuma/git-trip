@@ -51,9 +51,7 @@ See the individual class docs for more options and specific examples.
    # This does the work of creating a commit specific image.
    painter.paint!
 
-   # Depending on the <tt>:style</tt> option passed to Painter.new,
-   # +picture+ now holds either a Magick::Image or Magick::ImageList,
-   # so all of their respective methods are supported.
+   # +picture+ now holds a Magick::Image, so all of it's methods are supported.
    painter.picture.display
  end
 

@@ -39,7 +39,11 @@ def gen_test_images(dir, repo_dir)
     base_dir = "#{dir}/#{format}"
     FileUtils.mkpath(base_dir) unless File.exists?(base_dir)
     repo.commits.each_with_index do |commit, index|
-      painter = GitTrip::Painter.new(commit)
+      painter = GitTrip::Painter.new(commit,
+        :label  => true,
+        :style  => 'horizontal',
+        :width  => 100,
+        :height => 100)
       painter.paint!
       painter.picture.write("#{base_dir}/#{index}.#{format}")
     end
