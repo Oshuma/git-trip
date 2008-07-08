@@ -43,6 +43,8 @@ def gen_test_images(dir, repo_dir)
       painter = GitTrip::Painter.new(commit)
       painter.paint!
       painter.picture.write("#{base_dir}/#{index}.#{format}")
+      cool_pic = GitTrip::PaintMode.new(painter.picture, :radial).picture
+      cool_pic.write("#{base_dir}/#{index}-pretty.#{format}")
     end
     header("Images written to #{base_dir}")
   end
