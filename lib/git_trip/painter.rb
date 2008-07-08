@@ -2,8 +2,6 @@ module GitTrip
 
   # This does the work of creating a commit specific image.
   class Painter
-    include Magick
-
     DEFAULTS = {
       :header => false,
       :label  => false,
@@ -74,7 +72,7 @@ module GitTrip
     # Builds a Magick::ImageList canvas for the <tt>@colors</tt>.
     # This is also where the label is conditionally applied.
     def build_canvas
-      canvas = ImageList.new
+      canvas = Magick::ImageList.new
       @colors.each do |color|
         image = Magick::Image.new(@options[:width], @options[:height]) do
           self.background_color = "\##{color}"
