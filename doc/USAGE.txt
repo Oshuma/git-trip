@@ -1,0 +1,54 @@
+See the individual class docs for more options and specific examples.
+
+ # Load it up!
+ require 'git_trip'
+
+ # Grab repository information.
+ repo = GitTrip::Gitter::Dir.new('/path/to/repo')
+ # .. or ..
+ repo = GitTrip::Gitter::URI.new('http://domain.com/path/to/repo')
+
+ # Now that you have a repository, you can do cool shit.
+ repo.commits.each do |commit|
+   # GitTrip::Painter requires a commit SHA (string).
+   painter = GitTrip::Painter.new(commit)
+
+   # This does the work of creating a commit specific image.
+   painter.paint!
+
+   # painter's +picture+ now holds a Magick::Image, so all of it's methods are supported.
+   painter.picture.display
+
+   # From this point, you can do something pretty with the image.
+   # GitTrip::PaintMode takes a Magick::Image and a mode type.
+   pretty = GitTrip::PaintMode.new(painter.picture, :pixel)
+
+   # Just as with GitTrip::Painter, pretty's +picture+ now holds a Magick::Image.
+   pretty.picture.display
+ end
+
+
+If you wanted to use GitTrip in a Rails application, here's an example controller ##create method.
+
+ # app/controllers/trip_controller.rb
+ class TripController < ApplicationController
+   def create
+     painter = GitTrip::Painter.new(params[:hash])
+     painter.paint!
+     pretty = GitTrip::PaintMode.new(painter.picture, :blend)
+     pretty.picture.format = 'PNG'
+     send_data pretty.picture.to_blob,
+       :filename => 'trip.png',
+       :type => 'image/png',
+       :disposition => 'inline'
+   end
+ end
+
+ # config/routes.rb
+ map.trip 'trip/:hash', :controller => 'trip', :action => 'create'
+
+Then use it like so:
+
+ <img src="http://domain.com/trip/103d8734bd5fb0958ea0b6fa3fe59de7ada96df7" />
+
+Slick.  Thanks goes to Scott Barron <http://rubyi.st> for that tip.

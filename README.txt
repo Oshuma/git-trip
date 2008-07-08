@@ -39,34 +39,7 @@ Forums:: http://rubyforge.org/forum/?group_id=6594
 
 === USAGE:
 
-See the individual class docs for more options and specific examples.
-
- # Load it up!
- require 'git_trip'
-
- # Grab repository information.
- repo = GitTrip::Gitter::Dir.new('/path/to/repo')
- # .. or ..
- repo = GitTrip::Gitter::URI.new('http://domain.com/path/to/repo')
-
- # Now that you have a repository, you can do cool shit.
- repo.commits.each do |commit|
-   # GitTrip::Painter requires a commit SHA (string).
-   painter = GitTrip::Painter.new(commit)
-
-   # This does the work of creating a commit specific image.
-   painter.paint!
-
-   # painter's +picture+ now holds a Magick::Image, so all of it's methods are supported.
-   painter.picture.display
-
-   # From this point, you can do something pretty with the image.
-   # GitTrip::PaintMode takes a Magick::Image and a mode type.
-   pretty = GitTrip::PaintMode.new(painter.picture, :pixel)
-
-   # Just as with GitTrip::Painter, pretty's +picture+ now holds a Magick::Image.
-   pretty.picture.display
- end
+See doc/USAGE.txt.
 
 === LICENSE:
 
