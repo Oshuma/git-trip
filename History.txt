@@ -1,3 +1,14 @@
+=== 0.0.3 / 2008-07-08
+
+Many nice changes, including (but not limited to):
+
+* Better handling of internal images.
+* Smarter defaults.
+* More options to GitTrip::Painter
+* GitTrip::Painter#save
+* All new GitTrip::PaintMode, which makes your images pretty!
+* Documentation updates.
+
 === 0.0.2 / 2008-07-04
 
 * Actually functioning!
