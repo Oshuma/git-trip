@@ -5,8 +5,8 @@ module GitTrip
     include Magick
 
     DEFAULTS = {
-      :header => true,
-      :label  => true,
+      :header => false,
+      :label  => false,
       :style  => 'horizontal',
       :width  => 50,
       :height => 50
