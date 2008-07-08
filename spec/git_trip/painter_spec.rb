@@ -56,7 +56,13 @@ describe Painter do
 
   it "should set default style" do
     options = @painter.instance_variable_get(:@options)
-    options[:style].should eql('montage')
+    options[:style].should_not be_nil
+  end
+
+  it "should allow a horizontal style" do
+    @painter = Painter.new(@commit, :style => 'horizontal')
+    options = @painter.instance_variable_get(:@options)
+    options[:style].should eql('horizontal')
   end
 
   it "should allow a vertical style" do
@@ -95,51 +101,16 @@ describe Painter do
     @painter.picture.should be_instance_of(Magick::Image)
   end
 
-  it "should manually call paint_montage" do
-    @painter.paint_montage.should_not be_false
-    @painter.picture.should be_instance_of(Magick::Image)
-  end
-
-  it "should raise Errors::RTFM if not a montage" do
-    lambda do
-      Painter.new(@commit, :style => 'horizontal').paint_montage
-    end.should raise_error(Errors::RTFM)
-  end
-
   it "should paint a horizontal image" do
     @painter = Painter.new(@commit, :style => 'horizontal')
     @painter.paint!.should_not be_false
     @painter.picture.should be_instance_of(Magick::Image)
   end
 
-  it "should manually call paint_horizontal" do
-    @painter = Painter.new(@commit, :style => 'horizontal')
-    @painter.paint_horizontal.should_not be_false
-    @painter.picture.should be_instance_of(Magick::Image)
-  end
-
-  it "should raise Errors::RTFM if not horizontal style" do
-    lambda do
-      Painter.new(@commit, :style => 'montage').paint_horizontal
-    end.should raise_error(Errors::RTFM)
-  end
-
   it "should paint a vertical image" do
     @painter = Painter.new(@commit, :style => 'vertical')
     @painter.paint!.should_not be_false
     @painter.picture.should be_instance_of(Magick::Image)
-  end
-
-  it "should manually call paint_vertical" do
-    @painter = Painter.new(@commit, :style => 'vertical')
-    @painter.paint_vertical.should_not be_false
-    @painter.picture.should be_instance_of(Magick::Image)
-  end
-
-  it "should raise Errors::RTFM if not vertical style" do
-    lambda do
-      Painter.new(@commit, :style => 'montage').paint_vertical
-    end.should raise_error(Errors::RTFM)
   end
 
   it "should create an image with commits color labels" do
@@ -156,5 +127,11 @@ describe Painter do
   it "should allow a custom name" do
     @painter = Painter.new(@commit, :name => 'Awesome')
     @painter.name.should eql('Awesome')
+  end
+
+  it "should allow a custom header option" do
+    @painter = Painter.new(@commit, :header => false)
+    options = @painter.instance_variable_get(:@options)
+    options[:header].should be_false
   end
 end

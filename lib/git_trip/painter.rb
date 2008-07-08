@@ -5,8 +5,9 @@ module GitTrip
     include Magick
 
     DEFAULTS = {
-      :label  => false,
-      :style  => 'montage',
+      :header => true,
+      :label  => true,
+      :style  => 'horizontal',
       :width  => 50,
       :height => 50
     }
@@ -24,8 +25,9 @@ module GitTrip
     #
     # +options+ can contain:
     # * <tt>format</tt>: Image format; anything Magick::Image.new supports (ex. 'png', 'gif', etc).
+    # * <tt>header</tt>: If true, prints a header above the image, defaults to true; see +name+.
     # * <tt>label</tt>: If true, the commit SHA will be included in the image; defaults to false.
-    # * <tt>name</tt>: The text to use above the commit image; only used if +style+ is 'montage'.
+    # * <tt>name</tt>: The text to use above the commit image; only used if +header+ is true.
     # * <tt>style</tt>: Generated image style; see STYLES.
     # * <tt>width</tt>: Generated commit image width.
     # * <tt>height</tt>: Generated commit image height.
@@ -43,46 +45,21 @@ module GitTrip
 
     # Paint a <tt>@picture</tt> based on <tt>@canvas</tt> and <tt>@options[:style]</tt>.
     def paint!
-      case @options[:style]
-      when 'horizontal': paint_horizontal
-      when 'vertical':   paint_vertical
-      when 'montage':    paint_montage
-      else
-        raise Errors::InvalidStyle
-      end
-    end
-
-    # Builds the <tt>@picture</tt>.
-    # Called if <tt>@options[:style] == 'montage'</tt>.
-    def paint_montage
-      raise Errors::RTFM unless @options[:style] == 'montage'
-
       # Need to set these locally, since <tt>Magick::ImageList#montage</tt>
-      # can't access <tt>@options</tt> in it's block, for some reason.
+      # can't access instance variables in it's block, for some reason.
+      name   = @name
+      header = @options[:header]
       width  = @options[:width]
       height = @options[:height]
-      name   = @name
+      dimensions = get_dimensions
 
-      @picture = @canvas.montage do
+      montage = @canvas.montage do
         self.geometry = Magick::Geometry.new(width, height, 0, 0)
-        # self.tile = '6x1' # horizontal
-        # self.tile = '1x6' # vertical
-        self.title = name
-      end.flatten_images
-    end
+        self.title = name if header
+        self.tile = dimensions
+      end
 
-    # Builds the <tt>@picture</tt>.
-    # Called if <tt>@options[:style] == 'horizontal'</tt>.
-    def paint_horizontal
-      raise Errors::RTFM unless @options[:style] == 'horizontal'
-      @picture = @canvas.append(false)
-    end
-
-    # Builds the <tt>@picture</tt>.
-    # Called if <tt>@options[:style] == 'vertical'</tt>.
-    def paint_vertical
-      raise Errors::RTFM unless @options[:style] == 'vertical'
-      @picture = @canvas.append(true)
+      @picture = montage.flatten_images
     end
 
     private
@@ -95,6 +72,7 @@ module GitTrip
     end
 
     # Builds a Magick::ImageList canvas for the <tt>@colors</tt>.
+    # This is also where the label is conditionally applied.
     def build_canvas
       canvas = ImageList.new
       @colors.each do |color|
@@ -133,6 +111,21 @@ module GitTrip
       first = colors.sort_by{rand}.first.split('')[0..2].sort_by{rand}.to_s
       last  = colors.sort_by{rand}.last.split('')[0..2].sort_by{rand}.to_s
       return "--- #{first}.#{@remainder}.#{last} ---"
+    end
+
+    # Returns a string of dimensions to be used in an ImageList#montage block.
+    # (ex. '4x3')
+    def get_dimensions
+      case @options[:style]
+      when 'horizontal'
+        "#{@colors.size}x1"
+      when 'vertical'
+        "1x#{@colors.size}"
+      when 'montage'
+        left  = ((@colors.size / 2) + (@colors.size % 2))
+        right = (@colors.size / 2)
+        "#{left}x#{right}"
+      end
     end
 
     # Returns true if +sha+ is invalid.

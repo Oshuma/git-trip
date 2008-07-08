@@ -5,8 +5,8 @@ type: :task
 component: git-trip
 release: beta
 reporter: Dale Campbell <dale@save-state.net>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-07-05 18:39:43.331739 Z
 references: []
 
@@ -16,3 +16,11 @@ log_events:
   - Dale Campbell <dale@save-state.net>
   - created
   - ""
+- - 2008-07-08 13:45:07.884608 Z
+  - Dale Campbell <dale@save-state.net>
+  - changed status from unstarted to in_progress
+  - Starting on this shit.
+- - 2008-07-08 14:54:16.190669 Z
+  - Dale Campbell <dale@save-state.net>
+  - closed issue with disposition fixed
+  - Refactored them into Painter#paint!

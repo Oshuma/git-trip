@@ -1,6 +1,7 @@
-FORMATS  = %w{ gif jpg png }
+# Comma seperated list of image formats.
+FORMATS = ENV['FORMATS'] ? ENV['FORMATS'].split(',') : %w{ gif jpg png }
 # Output directory.
-IMG_DIR  = ENV['IMG_DIR']  || File.join(APP_ROOT, 'sandbox/git-trip')
+IMG_DIR = ENV['IMG_DIR']  || File.join(APP_ROOT, 'sandbox/git-trip')
 # Repository to use in image generation.
 IMG_REPO = ENV['IMG_REPO'] || APP_ROOT
 
@@ -39,11 +40,7 @@ def gen_test_images(dir, repo_dir)
     base_dir = "#{dir}/#{format}"
     FileUtils.mkpath(base_dir) unless File.exists?(base_dir)
     repo.commits.each_with_index do |commit, index|
-      painter = GitTrip::Painter.new(commit,
-        :label  => true,
-        :style  => 'horizontal',
-        :width  => 100,
-        :height => 100)
+      painter = GitTrip::Painter.new(commit)
       painter.paint!
       painter.picture.write("#{base_dir}/#{index}.#{format}")
     end

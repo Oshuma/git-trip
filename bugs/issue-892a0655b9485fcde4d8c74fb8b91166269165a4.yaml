@@ -5,8 +5,8 @@ type: :feature
 component: git-trip
 release: beta
 reporter: Dale Campbell <dale@save-state.net>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-07-05 15:11:12.208910 Z
 references: []
 
@@ -16,3 +16,7 @@ log_events:
   - Dale Campbell <dale@save-state.net>
   - created
   - ""
+- - 2008-07-08 14:54:41.463423 Z
+  - Dale Campbell <dale@save-state.net>
+  - closed issue with disposition fixed
+  - Done.
