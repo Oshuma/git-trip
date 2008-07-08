@@ -6,6 +6,18 @@ IMG_DIR = ENV['IMG_DIR']  || File.join(APP_ROOT, 'sandbox/git-trip')
 IMG_REPO = ENV['IMG_REPO'] || APP_ROOT
 
 namespace :gittrip do
+  desc 'Clean up dynamically generated files'
+  task :cleanup do
+    %w{
+      docs:clear
+      gittrip:site:clear_local
+      gittrip:test:images:clear
+      issues:report:clear
+    }.each do |cleaner|
+      Rake::Task[cleaner].invoke
+    end
+  end
+
   namespace :test do
     desc 'Generate test images in sandbox/git-trip'
     task :images => 'gittrip:test:images:generate'
