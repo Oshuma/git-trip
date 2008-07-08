@@ -51,12 +51,12 @@ module GitTrip
       header = @options[:header]
       width  = @options[:width]
       height = @options[:height]
-      dimensions = get_dimensions
+      size = get_dimensions
 
       montage = @canvas.montage do
-        self.geometry = Magick::Geometry.new(width, height, 0, 0)
+        self.geometry = Magick::Geometry.new(width, height)
         self.title = name if header
-        self.tile = dimensions
+        self.tile = Magick::Geometry.new(size.first, size.last) if size
       end
 
       @picture = montage.flatten_images
@@ -113,18 +113,14 @@ module GitTrip
       return "--- #{first}.#{@remainder}.#{last} ---"
     end
 
-    # Returns a string of dimensions to be used in an ImageList#montage block.
-    # (ex. '4x3')
+    # Returns an array of dimensions to be used in an ImageList#montage block.
+    # (ex. [4, 3])
     def get_dimensions
       case @options[:style]
       when 'horizontal'
-        "#{@colors.size}x1"
+        [@colors.size, 1]
       when 'vertical'
-        "1x#{@colors.size}"
-      when 'montage'
-        left  = ((@colors.size / 2) + (@colors.size % 2))
-        right = (@colors.size / 2)
-        "#{left}x#{right}"
+        [1, @colors.size]
       end
     end
 
