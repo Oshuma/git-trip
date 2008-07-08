@@ -23,15 +23,9 @@ end
 def confirm(message, options = {})
   confirm_message = options[:confirm_message] || 'Are you sure?'
   banner = options[:banner] || false
-  if banner
-    header(message) # print with header
-    print "#{confirm_message} (yes/no) "
-    choice = STDIN.gets.chomp
-  else
-    puts message
-    print "#{confirm_message} (yes/no) "
-    choice = STDIN.gets.chomp
-  end
+  banner ? header(message) : puts("\n#{message}")
+  print "#{confirm_message} (yes/no) "
+  choice = STDIN.gets.chomp
 
   case choice
   when 'yes'
