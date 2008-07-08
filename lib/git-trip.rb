@@ -12,10 +12,10 @@ require 'vendor/grit/lib/grit'
 
 # GitTrip libraries.
 require 'core_ext/hash'
-require 'git_trip/errors'
-require 'git_trip/gitter'
-require 'git_trip/paint_mode'
-require 'git_trip/painter'
+require 'git-trip/errors'
+require 'git-trip/gitter'
+require 'git-trip/paint_mode'
+require 'git-trip/painter'
 
 module GitTrip
   VERSION = '0.0.2'

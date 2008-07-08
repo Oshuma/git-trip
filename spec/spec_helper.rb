@@ -1,6 +1,6 @@
 require 'spec'
 
-require File.expand_path(File.dirname(__FILE__) + '/../lib/git_trip')
+require File.expand_path(File.dirname(__FILE__) + '/../lib/git-trip')
 include GitTrip
 
 Spec::Runner.configure do |config|

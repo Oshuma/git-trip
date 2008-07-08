@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'hoe'
-require './lib/git_trip.rb'
+require './lib/git-trip.rb'
 
 APP_ROOT = File.dirname(__FILE__) unless defined?(APP_ROOT)
 
@@ -27,5 +27,5 @@ remove_task 'test_deps'
 
 desc 'Start an irb session with Ridge loaded'
 task :console do
-  sh "irb -d -I ./lib -r 'git_trip'"
+  sh "irb -d -I ./lib -r 'git-trip'"
 end
