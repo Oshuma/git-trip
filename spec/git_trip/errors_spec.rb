@@ -13,6 +13,14 @@ describe Errors do
     Errors::InvalidGitRepo.should be_a_kind_of(Class)
   end
 
+  it "should define InvalidMode" do
+    Errors::InvalidMode.should be_a_kind_of(Class)
+  end
+
+  it "should define InvalidPicture" do
+    Errors::InvalidPicture.should be_a_kind_of(Class)
+  end
+
   it "should define InvalidSHA" do
     Errors::InvalidSHA.should be_a_kind_of(Class)
   end

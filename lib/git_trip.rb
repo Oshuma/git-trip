@@ -14,6 +14,7 @@ require 'vendor/grit/lib/grit'
 require 'core_ext/hash'
 require 'git_trip/errors'
 require 'git_trip/gitter'
+require 'git_trip/paint_mode'
 require 'git_trip/painter'
 
 module GitTrip
