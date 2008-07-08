@@ -6,6 +6,10 @@ describe Painter do
     @painter = Painter.new(@commit)
   end
 
+  it "should instantiate" do
+    @painter.should be_instance_of(Painter)
+  end
+
   it "should raise Errors::InvalidSHA" do
     lambda { Painter.new('not a valid sha') }.should raise_error(Errors::InvalidSHA)
   end
@@ -20,12 +24,12 @@ describe Painter do
     lambda { Painter.new(5) }.should raise_error(Errors::RTFM)
   end
 
-  it "should have access to Image" do
-    Painter::Image.should be_a_kind_of(Class)
+  it "should define DEFAULTS" do
+    Painter::DEFAULTS.should be_instance_of(Hash)
   end
 
-  it "should instantiate" do
-    @painter.should be_instance_of(Painter)
+  it "should define STYLES" do
+    Painter::STYLES.should be_instance_of(Array)
   end
 
   it "should build a canvas" do
