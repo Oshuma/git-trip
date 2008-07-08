@@ -33,6 +33,10 @@ describe Errors do
     Errors::NoCommits.should be_a_kind_of(Class)
   end
 
+  it "should define NoPicture" do
+    Errors::NoPicture.should be_a_kind_of(Class)
+  end
+
   it "should define RTFM" do
     Errors::RTFM.should be_a_kind_of(Class)
   end

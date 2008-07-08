@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Painter and PaintMode refactoring
+desc: Refactor Painter and PaintMode into a module of their own.
+type: :task
+component: git-trip
+release: beta
+reporter: Dale Campbell <dale@save-state.net>
+status: :unstarted
+disposition: 
+creation_time: 2008-07-08 23:19:18.079328 Z
+references: []
+
+id: 00b37d05bd898106ad109ba4ec04e4d097b75600
+log_events: 
+- - 2008-07-08 23:19:18.767391 Z
+  - Dale Campbell <dale@save-state.net>
+  - created
+  - ""

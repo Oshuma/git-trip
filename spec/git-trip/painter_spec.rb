@@ -138,4 +138,36 @@ describe Painter do
     options = @painter.instance_variable_get(:@options)
     options[:header].should be_false
   end
+
+  it "should allow custom format option" do
+    @painter = Painter.new(@commit, :format => 'jpg')
+    options = @painter.instance_variable_get(:@options)
+    options[:format].should eql('jpg')
+    @painter.paint!
+    @painter.picture.should be_instance_of(Magick::Image)
+  end
+
+  it "should raise Errors::InvalidFormat" do
+    lambda do
+      @painter = Painter.new(@commit, :format => 'some shit')
+    end.should raise_error(Errors::InvalidFormat)
+  end
+
+  it "should raise Errors::NoPicture" do
+    lambda do
+      @painter.save('/tmp', 'no picture')
+    end.should raise_error(Errors::NoPicture)
+  end
+
+  # Yes, this spec sucks.
+  it "should save the picture" do
+    test_path = File.expand_path('./sandbox/')
+    test_name = 'git-trip-test'
+    test_file = File.join(test_path, "#{test_name}.png")
+    File.delete(test_file) if File.exists?(test_file)
+    @painter.paint!
+    @painter.save(test_path, test_name).should be_instance_of(Magick::Image)
+    File.exists?(test_file).should be_true
+    File.delete(test_file) if File.exists?(test_file)
+  end
 end

@@ -12,6 +12,7 @@ module GitTrip
       InvalidStyle
       InvalidURI
       NoCommits
+      NoPicture
       RTFM
     }.each do |problem|
       eval("class #{problem} < Exception; end")

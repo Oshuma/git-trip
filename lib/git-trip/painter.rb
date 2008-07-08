@@ -3,6 +3,7 @@ module GitTrip
   # This does the work of creating a commit specific image.
   class Painter
     DEFAULTS = {
+      :format => 'png',
       :header => false,
       :label  => false,
       :style  => 'horizontal',
@@ -30,11 +31,12 @@ module GitTrip
     # * <tt>width</tt>: Generated commit image width.
     # * <tt>height</tt>: Generated commit image height.
     def initialize(sha, options = {})
-      raise Errors::RTFM unless sha.is_a?(String)
-      raise Errors::InvalidSHA if invalid_sha?(sha)
-      @sha     = sha
       @options = DEFAULTS.merge(options)
+      raise Errors::RTFM unless sha.is_a?(String)
+      raise Errors::InvalidFormat unless Magick.formats.include?(@options[:format].upcase)
+      raise Errors::InvalidSHA if invalid_sha?(sha)
       raise Errors::InvalidStyle if invalid_style?(@options[:style])
+      @sha     = sha
       @colors, @remainder = split_colors
       @name = (@options[:name] || create_name)
       @canvas  = build_canvas
@@ -42,6 +44,7 @@ module GitTrip
     end
 
     # Paint a <tt>@picture</tt> based on <tt>@canvas</tt> and <tt>@options[:style]</tt>.
+    # Returns true or false based on the success of assigning <tt>@picture</tt>.
     def paint!
       # Need to set these locally, since <tt>Magick::ImageList#montage</tt>
       # can't access instance variables in it's block, for some reason.
@@ -58,6 +61,24 @@ module GitTrip
       end
 
       @picture = montage.flatten_images
+      @picture.format = @options[:format]
+      return (@picture ? true : false)
+    end
+
+    # Saves <tt>@picture</tt> to +location+ as '<tt>name</tt>.<tt>format</tt>'.
+    # Returns the <tt>@picture</tt> or nil upon failure.
+    #
+    # Example:
+    #   painter = GitTrip::Painter.new(commit, :format => 'png')
+    #   painter.paint!
+    #   painter.save('/tmp', 'my_repo')
+    #
+    # Which would save the image as '/tmp/my_repo.png'
+    def save(location, name)
+      raise Errors::NoPicture unless @picture
+      full_path = File.expand_path(location)
+      FileUtils.mkpath(full_path) unless File.exists?(full_path)
+      @picture.write("#{location}/#{name}.#{@options[:format]}")
     end
 
     private
