@@ -19,7 +19,6 @@ module GitTrip
       end
 
       # Loads a hash of commits into <tt>@data[:commits]</tt>.
-      # TODO: Implement loading commits from any git branch/object.
       def load_repo_commits
         commits = []
         @repo.commits(@repo.head.name, @repo.commit_count).map do |c|

@@ -21,7 +21,6 @@ module GitTrip
 
     # Takes a single 40 character +sha+ string and an (optional)
     # hash of +options+ (see DEFAULTS).
-    # TODO: Implement @options[:format]
     #
     # +options+ can contain:
     # * <tt>format</tt>: Image format; anything Magick::Image.new supports (ex. 'png', 'gif', etc).
@@ -109,7 +108,7 @@ module GitTrip
 
     # Builds an image with the given +text+.
     # TODO: Find a sane way of setting the pointsize.
-    # TODO: Allow a custom font options.
+    # TODO: Allow custom font options.
     def build_label(text)
       shading = false
 

@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Load commits from any git granch.
+desc: |-
+  Currently, Gitter::Dir only loads the commits from the HEAD branch of the given
+  repository.  Add an option to load from any branch/object.
+type: :feature
+component: git-trip
+release: beta
+reporter: Dale Campbell <dale@save-state.net>
+status: :unstarted
+disposition: 
+creation_time: 2008-07-08 12:47:09.219296 Z
+references: []
+
+id: 76245adac432cc110b3d3b4c314afc7e04256e79
+log_events: 
+- - 2008-07-08 12:47:11.003224 Z
+  - Dale Campbell <dale@save-state.net>
+  - created
+  - ""

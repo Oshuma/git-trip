@@ -1,0 +1,21 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: format option for Painter.new
+desc: |-
+  Which would determine the resulting file type (jpg, png, etc).  This might
+  not be needed directly for Painter.new, but as a 'writer' method which
+  would save the picture to disk.
+type: :feature
+component: git-trip
+release: beta
+reporter: Dale Campbell <dale@save-state.net>
+status: :unstarted
+disposition: 
+creation_time: 2008-07-08 12:31:11.324866 Z
+references: []
+
+id: 697bf3e6bd052ad30b5e773d1cd7c824a2fd592b
+log_events: 
+- - 2008-07-08 12:31:12.228958 Z
+  - Dale Campbell <dale@save-state.net>
+  - created
+  - ""
