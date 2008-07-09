@@ -1,4 +1,4 @@
-$LOAD_PATH.unshift File.dirname(__FILE__)
+$LOAD_PATH.unshift File.dirname(__FILE__), File.dirname("#{__FILE__}/vendor")
 
 # Third-party libraries...
 require 'rubygems'
