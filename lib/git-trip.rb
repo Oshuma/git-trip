@@ -1,14 +1,12 @@
-$LOAD_PATH.unshift File.dirname(__FILE__), File.dirname("#{__FILE__}/vendor")
+$LOAD_PATH.unshift File.dirname(__FILE__)
 
 # Third-party libraries...
 require 'rubygems'
 require 'digest/sha1'
+require 'grit'
 require 'json'
 require 'open-uri'
 require 'RMagick'
-
-# ...in ./vendor/
-require File.join(File.dirname(__FILE__), '..', 'vendor/grit/lib/grit')
 
 # GitTrip libraries.
 require 'core_ext/hash'
