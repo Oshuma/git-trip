@@ -33,6 +33,9 @@ Forums:: http://rubyforge.org/forum/?group_id=6594
 
 === INSTALL:
 
+ # From RubyForge:
+ $ gem install git-trip
+
  # From Github:
  $ gem sources -a http://gems.github.com/ # (You only need to do this once.)
  $ gem install Oshuma-git-trip
