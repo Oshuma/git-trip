@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Remove duplication of URI and GitHub.
+desc: They're basically the same fucking class.  Refactor this garbage.
+type: :task
+component: git-trip
+release: beta
+reporter: Dale Campbell <dale@save-state.net>
+status: :unstarted
+disposition: 
+creation_time: 2008-07-09 20:20:42.090377 Z
+references: []
+
+id: 15915a5d23fcb022e3fa25c9d68a5a1ae5050468
+log_events: 
+- - 2008-07-09 20:20:43.289943 Z
+  - Dale Campbell <dale@save-state.net>
+  - created
+  - ""
