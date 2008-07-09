@@ -20,6 +20,9 @@ describe Gitter::URI do
     lambda { Gitter::URI.new('bogus URI') }.should raise_error(Errors::InvalidURI)
   end
 
-  it "should return an array of commit SHAs"
+  it "should return an array of commit SHAs" do
+    @repo.commits.should_not be_empty
+  end
+
   it "should return the author of a commit"
 end
