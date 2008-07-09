@@ -1,3 +1,7 @@
+=== 0.0.5 / 2008-07-09
+
+* Adding GitHub support to GitTrip::Gitter.
+
 === 0.0.4 / 2008-07-08
 
 * Fixing small bug when trying to require GitTrip as a gem.
