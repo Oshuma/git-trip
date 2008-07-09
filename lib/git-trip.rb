@@ -8,7 +8,7 @@ require 'open-uri'
 require 'RMagick'
 
 # ...in ./vendor/
-require 'vendor/grit/lib/grit'
+require File.join(File.dirname(__FILE__), '..', 'vendor/grit/lib/grit')
 
 # GitTrip libraries.
 require 'core_ext/hash'
