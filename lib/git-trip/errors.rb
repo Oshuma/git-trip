@@ -5,6 +5,7 @@ module GitTrip
     %w{
       DirNotFound
       InvalidFormat
+      InvalidGitHubTag
       InvalidGitRepo
       InvalidMode
       InvalidPicture

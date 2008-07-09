@@ -9,6 +9,10 @@ describe Errors do
     Errors::InvalidFormat.should be_a_kind_of(Class)
   end
 
+  it "should define InvalidGitHubTag" do
+    Errors::InvalidGitHubTag.should be_a_kind_of(Class)
+  end
+
   it "should define InvalidGitRepo" do
     Errors::InvalidGitRepo.should be_a_kind_of(Class)
   end
