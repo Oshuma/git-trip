@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'git-trip'
-  s.version = '0.0.3'
+  s.version = '0.0.4'
   s.authors = ['Dale Campbell']
   s.email = ['dale@save-state.net']
   s.homepage = 'http://git-trip.rubyforge.org'
@@ -18,7 +18,8 @@ Gem::Specification.new do |s|
   s.has_rdoc = true
   s.remote_rdoc_dir = 'api'
   s.extra_rdoc_files = ["History.txt", "Manifest.txt", "README.txt", "doc/USAGE.txt"]
-  s.rdoc_options = ["--main", "README.txt", '--all', '--inline-source', '--line-numbers', "--title 'GitTrip v0.0.3 Documentation'"]
+  rdoc_title = 'GitTrip v0.0.4 Documentation'
+  s.rdoc_options = ["--main", "README.txt", '--all', '--inline-source', '--line-numbers', "--title #{rdoc_title}"]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION

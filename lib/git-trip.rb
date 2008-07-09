@@ -18,6 +18,6 @@ require 'git-trip/paint_mode'
 require 'git-trip/painter'
 
 module GitTrip
-  VERSION = '0.0.3'
+  VERSION = '0.0.4'
   include GitTrip::Errors
 end
