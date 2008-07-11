@@ -42,7 +42,7 @@ module GitTrip
     def pixel_mode
       @image.ordered_dither
     end
-    
+
     # Radialize <tt>@image</tt>
     def radial_mode
       @image.radial_blur(90)

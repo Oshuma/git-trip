@@ -170,4 +170,17 @@ describe Painter do
     File.exists?(test_file).should be_true
     File.delete(test_file) if File.exists?(test_file)
   end
+
+  it "should allow a mode option" do
+    @painter = Painter.new(@commit, :mode => :blend)
+    @painter.should be_instance_of(Painter)
+    @painter.paint!
+    @painter.picture.should be_instance_of(Magick::Image)
+  end
+
+  it "should raise Errors::InvalidMode" do
+    lambda do
+      Painter.new(@commit, :mode => 'invalid').paint!
+    end.should raise_error(Errors::InvalidMode)
+  end
 end

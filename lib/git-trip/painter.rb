@@ -6,6 +6,7 @@ module GitTrip
       :format => 'png',
       :header => false,
       :label  => false,
+      :mode   => nil,
       :style  => 'horizontal',
       :width  => 50,
       :height => 50
@@ -27,6 +28,7 @@ module GitTrip
     # * <tt>header</tt>: If true, prints a header above the image, defaults to true; see +name+.
     # * <tt>label</tt>: If true, the commit SHA will be included in the image; defaults to false.
     # * <tt>name</tt>: The text to use above the commit image; only used if +header+ is true.
+    # * <tt>mode</tt>: If set, will generate a picture with the given render mode.  See PaintMode::MODES.
     # * <tt>style</tt>: Generated image style; see STYLES.
     # * <tt>width</tt>: Generated commit image width.
     # * <tt>height</tt>: Generated commit image height.
@@ -54,13 +56,19 @@ module GitTrip
       height = @options[:height]
       size = get_dimensions
 
-      montage = @canvas.montage do
+      image = @canvas.montage do
         self.geometry = Magick::Geometry.new(width, height)
         self.title = name if header
         self.tile = Magick::Geometry.new(size.first, size.last) if size
+      end.flatten_images
+
+      # Conditionally apply a PaintMode.
+      if @options[:mode]
+        @picture = PaintMode.new(image, @options[:mode]).picture
+      else
+        @picture = image
       end
 
-      @picture = montage.flatten_images
       @picture.format = @options[:format]
       return (@picture ? true : false)
     end
