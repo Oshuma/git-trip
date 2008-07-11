@@ -5,8 +5,8 @@ type: :task
 component: git-trip
 release: beta
 reporter: Dale Campbell <dale@save-state.net>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-07-08 23:19:18.079328 Z
 references: []
 
@@ -16,3 +16,7 @@ log_events:
   - Dale Campbell <dale@save-state.net>
   - created
   - ""
+- - 2008-07-11 06:36:41.450457 Z
+  - Dale Campbell <dale@save-state.net>
+  - closed issue with disposition fixed
+  - Painter now has a :mode option which is passed to PaintMode.
