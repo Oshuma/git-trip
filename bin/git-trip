@@ -1,3 +1,37 @@
 #!/usr/bin/env ruby -w
+require File.dirname(__FILE__) + '/../lib/git-trip'
 
-puts 'Coming soon...'
+require 'optparse'
+
+options = { :dir => '.' }
+
+opts = OptionParser.new do |opt|
+  opt.banner = "Usage: git-trip [options]"
+
+  opt.separator 'Required (only use one):'
+  opt.on('-g', '--github TAG', 'Create an image from a Github tag (ex. Oshuma/git-trip).') do |g|
+    options[:github] = g
+  end
+  opt.on('-d', '--dir DIR', 'Create an image from a local git repository.') do |d|
+    options[:dir] = d
+  end
+  opt.on('-u', '--uri URI', 'Create an image from a URI (currently expects JSON).') do |u|
+    options[:uri] = u
+  end
+
+  opt.separator ''
+  opt.separator 'Optional:'
+
+  opt.on('-r', '--render [MODE]', [:blend, :pixel, :radial],
+         'Run the image through the given PaintMode.') do |r|
+    options[:mode] = r
+  end
+
+  opt.on_tail('-h', '--help', 'Show this help text.') do
+    puts opt; exit
+  end
+  opt.on_tail('--version', 'Show GitTrip version.') do
+    puts "GitTrip v#{GitTrip::VERSION}"
+  end
+end
+opts.parse!(ARGV)
