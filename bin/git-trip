@@ -3,35 +3,103 @@ require File.dirname(__FILE__) + '/../lib/git-trip'
 
 require 'optparse'
 
-options = { :dir => '.' }
+module GitTrip
 
-opts = OptionParser.new do |opt|
-  opt.banner = "Usage: git-trip [options]"
+  # Command-line client that uses GitTrip.
+  class Client
+    # Provides a wrapper to print debug info.
+    def self.debug(message = nil, output = $stdout)
+      return unless message && $DEBUG
+      output.puts "--DEBUG: #{message}"
+    end
 
-  opt.separator 'Required (only use one):'
-  opt.on('-g', '--github TAG', 'Create an image from a Github tag (ex. Oshuma/git-trip).') do |g|
-    options[:github] = g
-  end
-  opt.on('-d', '--dir DIR', 'Create an image from a local git repository.') do |d|
-    options[:dir] = d
-  end
-  opt.on('-u', '--uri URI', 'Create an image from a URI (currently expects JSON).') do |u|
-    options[:uri] = u
-  end
+    # The main deal.  Accepts an array of arguments (usually ARGV).
+    def self.trip(args)
+      # Setup some defaults.
+      options = {
+        :format => 'png',
+        :mode   => nil
+      }
 
-  opt.separator ''
-  opt.separator 'Optional:'
+      opts = OptionParser.new do |opts|
+        opts.banner = "Usage: git-trip [options]"
 
-  opt.on('-r', '--render [MODE]', [:blend, :pixel, :radial],
-         'Run the image through the given PaintMode.') do |r|
-    options[:mode] = r
-  end
+        opts.separator ''
+        opts.separator 'Required (only use one):'
 
-  opt.on_tail('-h', '--help', 'Show this help text.') do
-    puts opt; exit
-  end
-  opt.on_tail('--version', 'Show GitTrip version.') do
-    puts "GitTrip v#{GitTrip::VERSION}"
-  end
+        opts.on('-g', '--github TAG',
+                'Create an image from a Github tag (ex. Oshuma/git-trip).') do |tag|
+          options[:github] = tag
+        end
+        opts.on('-d', '--dir DIR',
+                'Create an image from a local git repository.') do |dir|
+          options[:dir] = dir
+        end
+        opts.on('-u', '--uri URI',
+                'Create an image from a URI (currently expects JSON).') do |uri|
+          options[:uri] = uri
+        end
+
+        opts.separator ''
+        opts.separator 'Required:'
+
+        opts.on('-o', '--output DIR',
+                'Directory to save the generated images; will be created if needed.') do |dir|
+          options[:output] = dir
+        end
+
+        opts.separator ''
+        opts.separator 'Optional:'
+
+        opts.on('-f', '--format [FORMAT]',
+                'Generated image format (any valid ImageMagick format); defaults to png.') do |format|
+          options[:format] = format
+        end
+
+        opts.on('-r', '--render [MODE]', GitTrip::PaintMode::MODES,
+               'Run the image through the given PaintMode.') do |mode|
+          options[:mode] = mode
+        end
+
+        opts.on('--debug', 'Print debug info.') do
+          $DEBUG = true
+        end
+
+        opts.on_tail('--version', 'Show GitTrip version.') do
+          puts "GitTrip v#{GitTrip::VERSION}"; exit
+        end
+
+        opts.on_tail('-h', '--help', 'Show this help text.') do
+          puts opts; exit
+        end
+      end
+
+      # Parse them and return the options.
+      opts.parse!(args)
+      return options
+    end # of trip
+  end # of Client
+
+end # of GitTrip
+
+#
+# Use the shit above.
+#
+options = GitTrip::Client.trip(ARGV)
+repo = if options[:github]
+  GitTrip::Gitter::GitHub.new(options[:github])
+elsif options[:dir]
+  GitTrip::Gitter::Dir.new(options[:dir])
+elsif options[:uri]
+  GitTrip::Gitter::URI.new(options[:uri])
 end
-opts.parse!(ARGV)
+
+# Sanity shit.
+raise ArgumentError, 'Must specify output directory.  See --help for usage.' unless options[:output]
+FileUtils.mkpath(options[:output]) unless File.exists?(options[:output])
+
+# Generate and save the image.
+commit  = repo.commits.first
+painter = GitTrip::Painter.new(commit, :format => options[:format], :mode => options[:mode])
+painter.paint!
+painter.picture.write("#{options[:output]}/git-trip.#{options[:format]}")
