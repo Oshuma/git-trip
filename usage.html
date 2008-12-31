@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>GitTrip</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <meta name="author" content="Dale Campbell <dale@save-state.net>" />
+
+  <link href="stylesheet.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div id="header">
+    <h1>GitTrip</h1>
+    <div id="menu">
+      <ul id="nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/usage.html">Usage</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="content">
+    <div id="left">
+      <h1>Code</h1>
+
+      <p>
+        See the individual class <a href="http://git-trip.rubyforge.org/api/">docs</a> for more options and specific examples.
+      </p>
+
+      <pre>
+  # Load it up!
+  require 'git-trip'
+
+  # Grab repository information.
+  repo = GitTrip::Gitter::Dir.new('/path/to/repo')
+  # .. or ..
+  repo = GitTrip::Gitter::URI.new('http://domain.com/path/to/repo')
+  # .. or ..
+  repo = GitTrip::Gitter::GitHub('Oshuma/git-trip')
+
+  # Now that you have a repository, you can do cool shit.
+  repo.commits.each do |commit|
+    # Painter requires a commit SHA (string).
+    painter = GitTrip::Painter.new(commit)
+
+    # This does the work of creating a commit specific image.
+    painter.paint!
+
+    # 'picture' now holds a Magick::Image, so all of it's methods are supported.
+    painter.picture.display
+
+    # From this point, you can do something pretty with the image.
+    # GitTrip::PaintMode takes a Magick::Image and a mode type.
+    pretty = GitTrip::PaintMode.new(painter.picture, :pixel)
+
+    # Just as with GitTrip::Painter, pretty's 'picture' now holds a Magick::Image.
+    pretty.picture.display
+  end
+      </pre>
+
+      <p>
+        Or alternatively, you can pass a render mode directly to GitTrip::Painter
+        (which is passed along to GitTrip::PaintMode).
+        The following lines accomplish the same thing as the guts of the above 'each' block.
+      </p>
+
+      <pre>
+  painter = GitTrip::Painter.new(commit, :mode => :pixel)
+  painter.paint!
+  painter.picture.display
+      </pre>
+
+      <h1>Pretty</h1>
+
+      <p>
+        Here's an image that was generated from the actual GitTrip repository
+        (with no render mode):
+      </p>
+
+      <img src="http://git-trip.heroku.com/trip/0996d1ec3c0da1ff5ac91e5ed5678139932ead4d.png" />
+
+      <p>Here's the SHA broken down:</p>
+
+      <p style="font-family: courier;">
+        <span style="color: black; padding: 2px;">
+          0996d1ec3c0da1ff5ac91e5ed5678139932e ad4d<br />
+        </span>
+        <span style="background-color: #111; padding: 2px;">
+          <span style="color: #0996d1">0996d1</span><span style="color: #ec3c0d">ec3c0d</span><span style="color: #a1ff5a">a1ff5a</span><span style="color: #0996d1">c91e5e</span><span style="color: #d56781">d56781</span><span style="color: #39932e">39932e</span></span>
+        name
+      </p>
+
+      <p>
+        By default, the image 'name' (NOT filename) contains the remaining 4 characters
+        interpolated with some other random data pulled from the SHA.  This is certainly not
+        hard coded and can be changed through the options hash.
+      </p>
+    </div>
+
+    <div id="right">
+      <div class="box">
+        <h2>Project:</h2>
+        <ul>
+          <li><a href="http://git-trip.rubyforge.org/api/" title="API Documentation">API Documentation</a></li>
+          <li><a href="http://git-trip.rubyforge.org/issues/" title="Issue Status">Issue Status</a></li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <h2>Links:</h2>
+        <ul>
+          <li><a href="http://github.com/Oshuma/git-trip/" title="Source Code">Source Code</a></li>
+          <li><a href="http://rubyforge.org/projects/git-trip/" title="Project Page">Project Page</a></li>
+        </ul>
+      </div>
+
+
+      <div class="box">
+        <div style="font-size: 0.8em;">
+          &copy; 2008 <a href="http://corrupt.save-state.net/">Dale Campbell</a><br />
+          Design by <a href="http://www.minimalistic-design.net">Minimalistic Design</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
