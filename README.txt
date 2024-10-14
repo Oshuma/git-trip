@@ -1,3 +1,7 @@
+= Now with AI!🤖
+
+ShaTrip:: https://chatgpt.com/g/g-m5kIVi5bM-shatrip
+
 = GitTrip
 
 Author:: Dale Campbell <dale@save-state.net>
